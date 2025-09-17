@@ -16,19 +16,13 @@ interface DocumentResultsProps {
   analysis: DocumentAnalysis;
   originalDocument?: DocumentInputType;
   analysisMode?: "quick" | "comprehensive";
-  onSendToHumanizer?: (text: string) => void;
-  onSendToIntelligence?: (text: string) => void;
-  onSendToChat?: (text: string) => void;
 }
 
 const DocumentResults: React.FC<DocumentResultsProps> = ({ 
   id, 
   analysis, 
   originalDocument,
-  analysisMode = "comprehensive",
-  onSendToHumanizer,
-  onSendToIntelligence,
-  onSendToChat
+  analysisMode = "comprehensive"
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showAIDetectionModal, setShowAIDetectionModal] = useState(false);
@@ -116,9 +110,6 @@ const DocumentResults: React.FC<DocumentResultsProps> = ({
             <IntelligentRewriteButton
               originalText={originalDocument.content}
               originalAnalysis={analysis}
-              onSendToHumanizer={onSendToHumanizer}
-              onSendToIntelligence={onSendToIntelligence}
-              onSendToChat={onSendToChat}
             />
           )}
           <Button

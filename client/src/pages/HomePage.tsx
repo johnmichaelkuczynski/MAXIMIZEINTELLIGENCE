@@ -142,14 +142,19 @@ DOES THE AUTHOR USE OTHER AUTHORS TO DEVELOP HIS IDEAS OR TO CLOAK HIS OWN LACK 
     registerReceiver('humanizer-custom-instructions', (text: string) => {
       setHumanizerCustomInstructions(text);
     });
+    
+    registerReceiver('intelligence-analysis', (text: string) => {
+      setDocumentA({ ...documentA, content: text });
+    });
 
     // Cleanup function
     return () => {
       unregisterReceiver('humanizer-box-a');
       unregisterReceiver('humanizer-box-b');
       unregisterReceiver('humanizer-custom-instructions');
+      unregisterReceiver('intelligence-analysis');
     };
-  }, [registerReceiver, unregisterReceiver]);
+  }, [registerReceiver, unregisterReceiver, documentA]);
   
   const [boxAScore, setBoxAScore] = useState<number | null>(null);
   const [boxBScore, setBoxBScore] = useState<number | null>(null);
@@ -1479,11 +1484,11 @@ Generated on: ${new Date().toLocaleString()}`;
           ) : (
             <div>
               {/* Document A Results */}
-              {analysisA && <DocumentResults id="A" analysis={analysisA} originalDocument={documentA} analysisMode={analysisType} onSendToHumanizer={handleSendToHumanizer} onSendToIntelligence={handleSendToIntelligence} onSendToChat={handleSendToChat} />}
+              {analysisA && <DocumentResults id="A" analysis={analysisA} originalDocument={documentA} analysisMode={analysisType} />}
 
               {/* Document B Results (only in compare mode) */}
               {mode === "compare" && analysisB && (
-                <DocumentResults id="B" analysis={analysisB} originalDocument={documentB} analysisMode={analysisType} onSendToHumanizer={handleSendToHumanizer} onSendToIntelligence={handleSendToIntelligence} onSendToChat={handleSendToChat} />
+                <DocumentResults id="B" analysis={analysisB} originalDocument={documentB} analysisMode={analysisType} />
               )}
 
               {/* Comparative Results (only in compare mode) */}
@@ -1492,9 +1497,6 @@ Generated on: ${new Date().toLocaleString()}`;
                   analysisA={analysisA}
                   analysisB={analysisB}
                   comparison={comparison}
-                  onSendToHumanizer={handleSendToHumanizer}
-                  onSendToIntelligence={handleSendToIntelligence}
-                  onSendToChat={handleSendToChat}
                   documentAText={documentA?.content}
                   documentBText={documentB?.content}
                 />
@@ -2099,8 +2101,6 @@ Generated on: ${new Date().toLocaleString()}`;
                       <CopyButton text={boxC} />
                       <SendToButton 
                         text={boxC}
-                        onSendToIntelligence={handleSendToIntelligence}
-                        onSendToChat={handleSendToChat}
                       />
                     </div>
                   </div>
@@ -2201,9 +2201,6 @@ Generated on: ${new Date().toLocaleString()}`;
         onSendToInput={(content: string) => {
           setDocumentA({ ...documentA, content: content });
         }}
-        onSendToHumanizer={handleSendToHumanizer}
-        onSendToIntelligence={handleSendToIntelligence}
-        onSendToChat={handleSendToChat}
       />
 
       {/* Fiction Assessment Popup */}

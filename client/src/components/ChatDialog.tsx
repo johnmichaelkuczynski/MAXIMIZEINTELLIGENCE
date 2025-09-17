@@ -8,6 +8,7 @@ import { Send, Upload, Download, Mail, FileText, Paperclip, ArrowUpToLine } from
 import { MathRenderer } from './MathRenderer';
 import CopyButton from '@/components/CopyButton';
 import SendToButton from '@/components/SendToButton';
+import { useTextTransfer } from '@/contexts/TextTransferContext';
 
 interface ChatMessage {
   id: string;
@@ -22,9 +23,6 @@ interface ChatDialogProps {
   analysisResults?: any;
   onStreamingChunk?: (chunk: string, index: number, total: number) => void;
   onSendToInput?: (content: string) => void;
-  onSendToHumanizer?: (text: string) => void;
-  onSendToIntelligence?: (text: string) => void;
-  onSendToChat?: (text: string) => void;
 }
 
 type LLMProvider = "zhi1" | "zhi2" | "zhi3" | "zhi4";
@@ -40,18 +38,27 @@ export const ChatDialog: React.FC<ChatDialogProps> = ({
   currentDocument,
   analysisResults,
   onStreamingChunk,
-  onSendToInput,
-  onSendToHumanizer,
-  onSendToIntelligence,
-  onSendToChat
+  onSendToInput
 }) => {
   const { toast } = useToast();
+  const { registerReceiver, unregisterReceiver } = useTextTransfer();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [selectedProvider, setSelectedProvider] = useState<LLMProvider>("zhi1");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Register text transfer receiver for AI chat
+  useEffect(() => {
+    registerReceiver('ai-chat', (receivedText: string) => {
+      setInputMessage(receivedText);
+    });
+
+    return () => {
+      unregisterReceiver('ai-chat');
+    };
+  }, [registerReceiver, unregisterReceiver]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -378,9 +385,6 @@ User Question: ${inputMessage}
                         <CopyButton text={message.content} size="sm" variant="outline" className="text-xs" />
                         <SendToButton 
                           text={message.content}
-                          onSendToHumanizer={onSendToHumanizer}
-                          onSendToIntelligence={onSendToIntelligence}
-                          onSendToChat={onSendToChat}
                           size="sm"
                           variant="outline"
                           className="text-xs"

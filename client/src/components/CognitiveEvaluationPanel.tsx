@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,6 +8,8 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Brain, TrendingUp, Network, Zap, Eye, Settings } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
+import { useTextTransfer } from '@/contexts/TextTransferContext';
+import SendToButton from '@/components/SendToButton';
 
 interface CognitiveMarkers {
   semanticCompression: {
@@ -93,6 +95,18 @@ export default function CognitiveEvaluationPanel() {
   const [evaluation, setEvaluation] = useState<CognitiveEvaluation | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { registerReceiver, unregisterReceiver } = useTextTransfer();
+
+  // Register text transfer receiver for cognitive evaluation
+  useEffect(() => {
+    registerReceiver('cognitive-evaluation', (receivedText: string) => {
+      setText(receivedText);
+    });
+
+    return () => {
+      unregisterReceiver('cognitive-evaluation');
+    };
+  }, [registerReceiver, unregisterReceiver]);
 
   const handleEvaluate = async () => {
     if (!text.trim()) {
@@ -155,7 +169,16 @@ export default function CognitiveEvaluationPanel() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="text-sm font-medium mb-2 block">Text to Analyze</label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-sm font-medium">Text to Analyze</label>
+              {text.trim() && (
+                <SendToButton 
+                  text={text} 
+                  excludeTargets={['cognitive-evaluation']}
+                  size="sm"
+                />
+              )}
+            </div>
             <Textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -247,7 +270,14 @@ export default function CognitiveEvaluationPanel() {
               <Separator />
 
               <div className="space-y-2">
-                <div className="text-sm font-medium">Analysis Summary</div>
+                <div className="flex justify-between items-center">
+                  <div className="text-sm font-medium">Analysis Summary</div>
+                  <SendToButton 
+                    text={evaluation.analysis} 
+                    excludeTargets={['cognitive-evaluation']}
+                    size="sm"
+                  />
+                </div>
                 <div className="text-sm text-muted-foreground bg-gray-50 p-3 rounded-md">
                   {evaluation.analysis}
                 </div>

@@ -13,9 +13,6 @@ interface ComparativeResultsProps {
   comparison: DocumentComparison;
   documentAText?: string;
   documentBText?: string;
-  onSendToHumanizer?: (text: string) => void;
-  onSendToIntelligence?: (text: string) => void;
-  onSendToChat?: (text: string) => void;
 }
 
 const ComparativeResults: React.FC<ComparativeResultsProps> = ({
@@ -23,10 +20,7 @@ const ComparativeResults: React.FC<ComparativeResultsProps> = ({
   analysisB,
   comparison,
   documentAText,
-  documentBText,
-  onSendToHumanizer,
-  onSendToIntelligence,
-  onSendToChat,
+  documentBText
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
   
@@ -54,9 +48,6 @@ const ComparativeResults: React.FC<ComparativeResultsProps> = ({
               originalText={documentAText}
               originalAnalysis={analysisA}
               className="text-xs"
-              onSendToHumanizer={onSendToHumanizer}
-              onSendToIntelligence={onSendToIntelligence}
-              onSendToChat={onSendToChat}
             />
           )}
           {documentBText && (
@@ -64,9 +55,6 @@ const ComparativeResults: React.FC<ComparativeResultsProps> = ({
               originalText={documentBText}
               originalAnalysis={analysisB}
               className="text-xs"
-              onSendToHumanizer={onSendToHumanizer}
-              onSendToIntelligence={onSendToIntelligence}
-              onSendToChat={onSendToChat}
             />
           )}
           <Button 
