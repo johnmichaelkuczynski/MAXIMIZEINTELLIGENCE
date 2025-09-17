@@ -25,9 +25,11 @@ import { AnalysisMode, DocumentInput as DocumentInputType, AIDetectionResult, Do
 import { useToast } from "@/hooks/use-toast";
 import CopyButton from "@/components/CopyButton";
 import SendToButton from "@/components/SendToButton";
+import { useTextTransfer } from "@/contexts/TextTransferContext";
 
 const HomePage: React.FC = () => {
   const { toast } = useToast();
+  const { registerReceiver, unregisterReceiver } = useTextTransfer();
   
   // State for analysis mode
   const [mode, setMode] = useState<AnalysisMode>("single");
@@ -122,6 +124,33 @@ DOES THE AUTHOR USE OTHER AUTHORS TO DEVELOP HIS IDEAS OR TO CLOAK HIS OWN LACK 
   const [boxA, setBoxA] = useState(""); // AI text to humanize
   const [boxB, setBoxB] = useState(""); // Human style sample  
   const [boxC, setBoxC] = useState(""); // Humanized output
+
+  // Register text transfer receivers for humanizer inputs
+  useEffect(() => {
+    registerReceiver('humanizer-box-a', (text: string) => {
+      setBoxA(text);
+      // Trigger AI evaluation after a short delay
+      setTimeout(() => evaluateTextAI(text, setBoxAScore), 1000);
+    });
+    
+    registerReceiver('humanizer-box-b', (text: string) => {
+      setBoxB(text);
+      // Trigger AI evaluation after a short delay  
+      setTimeout(() => evaluateTextAI(text, setBoxBScore), 1000);
+    });
+    
+    registerReceiver('humanizer-custom-instructions', (text: string) => {
+      setHumanizerCustomInstructions(text);
+    });
+
+    // Cleanup function
+    return () => {
+      unregisterReceiver('humanizer-box-a');
+      unregisterReceiver('humanizer-box-b');
+      unregisterReceiver('humanizer-custom-instructions');
+    };
+  }, [registerReceiver, unregisterReceiver]);
+  
   const [boxAScore, setBoxAScore] = useState<number | null>(null);
   const [boxBScore, setBoxBScore] = useState<number | null>(null);
   const [boxCScore, setBoxCScore] = useState<number | null>(null);

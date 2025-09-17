@@ -1,76 +1,62 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Send, ArrowRight, MessageSquare, Zap, Brain } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { Send, ArrowRight, MessageSquare, Zap, Brain, FileText, Settings } from "lucide-react";
+import { useTextTransfer, TransferTarget } from "@/contexts/TextTransferContext";
 
 interface SendToButtonProps {
   text: string;
-  onSendToHumanizer?: (text: string) => void;
-  onSendToIntelligence?: (text: string) => void;
-  onSendToChat?: (text: string) => void;
   variant?: "default" | "secondary" | "outline" | "ghost";
   size?: "default" | "sm" | "lg";
   className?: string;
+  excludeTargets?: TransferTarget[];
 }
 
 export const SendToButton: React.FC<SendToButtonProps> = ({ 
   text, 
-  onSendToHumanizer,
-  onSendToIntelligence,
-  onSendToChat,
   variant = "outline", 
   size = "sm",
-  className = ""
+  className = "",
+  excludeTargets = []
 }) => {
-  const { toast } = useToast();
+  const { transferText, getAvailableTargets } = useTextTransfer();
 
-  const handleSendTo = (destination: string, callback?: (text: string) => void) => {
-    if (callback) {
-      callback(text);
-      toast({
-        title: `Sent to ${destination}`,
-        description: `Text has been sent to ${destination} successfully`
-      });
-    }
+  const targetInfo: Record<TransferTarget, { label: string; icon: React.ComponentType<any>; category: string }> = {
+    'humanizer-box-a': { label: 'Humanizer Box A (AI Text)', icon: Zap, category: 'humanizer' },
+    'humanizer-box-b': { label: 'Humanizer Box B (Style Sample)', icon: Zap, category: 'humanizer' },
+    'humanizer-custom-instructions': { label: 'Humanizer Instructions', icon: Settings, category: 'humanizer' },
+    'intelligence-analysis': { label: 'Intelligence Analysis', icon: Brain, category: 'analysis' },
+    'ai-chat': { label: 'AI Chat', icon: MessageSquare, category: 'chat' },
+    'cognitive-evaluation': { label: 'Cognitive Evaluation', icon: Brain, category: 'analysis' }
   };
 
-  const destinations = [
-    { 
-      label: "Humanizer", 
-      icon: Zap, 
-      callback: onSendToHumanizer,
-      available: !!onSendToHumanizer 
-    },
-    { 
-      label: "Intelligence Analysis", 
-      icon: Brain, 
-      callback: onSendToIntelligence,
-      available: !!onSendToIntelligence 
-    },
-    { 
-      label: "AI Chat", 
-      icon: MessageSquare, 
-      callback: onSendToChat,
-      available: !!onSendToChat 
-    }
-  ].filter(dest => dest.available);
+  const availableTargets = getAvailableTargets().filter(target => !excludeTargets.includes(target));
 
-  if (destinations.length === 0) {
+  // Group targets by category
+  const groupedTargets = availableTargets.reduce((acc, target) => {
+    const category = targetInfo[target].category;
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(target);
+    return acc;
+  }, {} as Record<string, TransferTarget[]>);
+
+  if (availableTargets.length === 0) {
     return null;
   }
 
-  if (destinations.length === 1) {
-    const dest = destinations[0];
+  if (availableTargets.length === 1) {
+    const target = availableTargets[0];
+    const info = targetInfo[target];
+    const IconComponent = info.icon;
     return (
       <Button
         variant={variant}
         size={size}
-        onClick={() => handleSendTo(dest.label, dest.callback)}
+        onClick={() => transferText(text, target)}
         className={`gap-2 ${className}`}
       >
-        <dest.icon className="h-4 w-4" />
-        Send to {dest.label}
+        <IconComponent className="h-4 w-4" />
+        Send to {info.label}
       </Button>
     );
   }
@@ -85,15 +71,24 @@ export const SendToButton: React.FC<SendToButtonProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {destinations.map((dest) => (
-          <DropdownMenuItem
-            key={dest.label}
-            onClick={() => handleSendTo(dest.label, dest.callback)}
-            className="cursor-pointer"
-          >
-            <dest.icon className="h-4 w-4 mr-2" />
-            {dest.label}
-          </DropdownMenuItem>
+        {Object.entries(groupedTargets).map(([category, targets], categoryIndex) => (
+          <React.Fragment key={category}>
+            {categoryIndex > 0 && <DropdownMenuSeparator />}
+            {targets.map((target) => {
+              const info = targetInfo[target];
+              const IconComponent = info.icon;
+              return (
+                <DropdownMenuItem
+                  key={target}
+                  onClick={() => transferText(text, target)}
+                  className="cursor-pointer"
+                >
+                  <IconComponent className="h-4 w-4 mr-2" />
+                  {info.label}
+                </DropdownMenuItem>
+              );
+            })}
+          </React.Fragment>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
