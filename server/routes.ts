@@ -466,6 +466,7 @@ export async function registerRoutes(app: Express): Promise<Express> {
     const openai_key = process.env.OPENAI_API_KEY;
     const anthropic_key = process.env.ANTHROPIC_API_KEY;
     const deepseek_key = process.env.DEEPSEEK_API_KEY;
+    const perplexity_key = process.env.PERPLEXITY_API_KEY;
     const mathpix_app_id = process.env.MATHPIX_APP_ID;
     const mathpix_app_key = process.env.MATHPIX_APP_KEY;
     
@@ -476,6 +477,7 @@ export async function registerRoutes(app: Express): Promise<Express> {
         openai: openai_key ? "configured" : "missing",
         anthropic: anthropic_key ? "configured" : "missing",
         deepseek: deepseek_key ? "configured" : "missing",
+        perplexity: perplexity_key ? "configured" : "missing",
         mathpix: (mathpix_app_id && mathpix_app_key) ? "configured" : "missing"
       }
     });
