@@ -5,6 +5,7 @@ import DocumentResults from "@/components/DocumentResults";
 import ComparativeResults from "@/components/ComparativeResults";
 import AIDetectionModal from "@/components/AIDetectionModal";
 import ProviderSelector, { LLMProvider } from "@/components/ProviderSelector";
+import tutorialVideo from "@assets/MAXIMIZE INTELLIGENCE_1760248157993.mp4";
 
 import ChatDialog from "@/components/ChatDialog";
 import SemanticDensityAnalyzer from "@/components/SemanticDensityAnalyzer";
@@ -19,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Brain, Trash2, FileEdit, Loader2, Zap, Clock, Sparkles, Download, Shield, RefreshCw, Upload, FileText, BookOpen } from "lucide-react";
+import { Brain, Trash2, FileEdit, Loader2, Zap, Clock, Sparkles, Download, Shield, RefreshCw, Upload, FileText, BookOpen, PlayCircle } from "lucide-react";
 import { analyzeDocument, compareDocuments, checkForAI } from "@/lib/analysis";
 import { AnalysisMode, DocumentInput as DocumentInputType, AIDetectionResult, DocumentAnalysis, DocumentComparison } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
@@ -1219,8 +1220,24 @@ Generated on: ${new Date().toLocaleString()}`;
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header */}
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Intelligence Analysis Tool</h1>
-        <p className="text-gray-600">Analyze, compare, and enhance writing samples with AI-powered intelligence evaluation</p>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">Intelligence Analysis Tool</h1>
+            <p className="text-gray-600 dark:text-gray-400">Analyze, compare, and enhance writing samples with AI-powered intelligence evaluation</p>
+          </div>
+          
+          {/* Video Tutorial Button */}
+          <a 
+            href={tutorialVideo} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+            data-testid="link-video-tutorial"
+          >
+            <PlayCircle className="h-6 w-6" />
+            <span className="text-lg">📹 Watch Tutorial</span>
+          </a>
+        </div>
       </header>
 
       {/* Analysis Mode Selector */}
