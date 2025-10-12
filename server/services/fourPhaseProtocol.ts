@@ -211,25 +211,48 @@ async function callLLMProvider(
 // Score extraction function
 function extractScore(text: string): number {
   console.log(`EXTRACTING SCORE FROM RESPONSE LENGTH: ${text.length}`);
+  console.log(`EXTRACTING SCORE - LAST 500 CHARS: "${text.slice(-500)}"`);
   
-  // Look for final score pattern first
-  const finalScoreMatch = text.match(/FINAL SCORE:\s*(\d+)\/100/i);
+  // Try multiple patterns in order of specificity
+  
+  // 1. Look for "FINAL SCORE: X/100" (case insensitive)
+  const finalScoreMatch = text.match(/FINAL\s*SCORE:\s*(\d+)\s*\/\s*100/i);
   if (finalScoreMatch) {
     const score = parseInt(finalScoreMatch[1]);
-    console.log(`EXTRACTED FINAL SCORE FORMAT: ${score}/100`);
+    console.log(`✓ EXTRACTED FINAL SCORE FORMAT: ${score}/100`);
     return score;
   }
   
-  // Look for explicit numerical score
-  const explicitMatch = text.match(/(\d+)\/100/g);
-  if (explicitMatch && explicitMatch.length > 0) {
-    const lastMatch = explicitMatch[explicitMatch.length - 1];
-    const score = parseInt(lastMatch.split('/')[0]);
-    console.log(`EXTRACTED NUMERICAL SCORE: ${score}/100`);
+  // 2. Look for "Score: X/100" or "score X/100"
+  const scoreMatch = text.match(/\bscore[:\s]+(\d+)\s*\/\s*100/i);
+  if (scoreMatch) {
+    const score = parseInt(scoreMatch[1]);
+    console.log(`✓ EXTRACTED SCORE FORMAT: ${score}/100`);
     return score;
   }
   
-  console.log('NO SCORE FOUND, defaulting to 0');
+  // 3. Look for any "X/100" pattern, prefer the last one
+  const allScores = text.match(/\b(\d+)\s*\/\s*100\b/g);
+  if (allScores && allScores.length > 0) {
+    const lastMatch = allScores[allScores.length - 1];
+    const score = parseInt(lastMatch.split('/')[0].trim());
+    console.log(`✓ EXTRACTED NUMERICAL SCORE (last occurrence): ${score}/100 from ${allScores.length} matches`);
+    return score;
+  }
+  
+  // 4. Look for standalone number near end if it's reasonable (1-100)
+  const endNumbers = text.slice(-1000).match(/\b(\d+)\b/g);
+  if (endNumbers) {
+    for (let i = endNumbers.length - 1; i >= 0; i--) {
+      const num = parseInt(endNumbers[i]);
+      if (num >= 1 && num <= 100) {
+        console.log(`⚠ EXTRACTED STANDALONE NUMBER: ${num} (fallback)`);
+        return num;
+      }
+    }
+  }
+  
+  console.log('❌ NO SCORE FOUND, defaulting to 0');
   return 0;
 }
 
