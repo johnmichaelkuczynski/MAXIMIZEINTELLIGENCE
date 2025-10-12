@@ -31,78 +31,118 @@ IF I WERE TO GIVE A HIGH SCORE TO THIS PASSAGE, WOULD I BE REWARDING IMPOSTOR SC
 IF I WERE TO GIVE A HIGH SCORE TO THIS PASSAGE, WOULD I BE REWARDING CONFORMITY TO ACADEMIC/BUREAUCRATIC NORMS?
 IF I WERE TO GIVE A LOW SCORE TO THIS PASSAGE, WOULD I BE PENALIZING ACTUAL INTELLIGENCE OWING TO A LACK OF CONFORMITY TO ACADEMIC/BUREAUCRATIC NORMS?`;
 
-// PHASE 1: Complete protocol with all questions exactly as specified
-function createPhase1Prompt(text: string, questions: string): string {
-  return `CRITICAL: This is NOT a grading app. You are NOT evaluating academic work. You are assessing INTELLIGENCE ONLY.
+// PHASE 1: COMPREHENSIVE - Ultra-detailed evidence-based analysis
+function createPhase1ComprehensivePrompt(text: string, questions: string): string {
+  return `COMPREHENSIVE INTELLIGENCE ANALYSIS - DETAILED EVIDENCE-BASED EVALUATION
 
-FUNDAMENTAL PRINCIPLE: If a text shows brilliance but is insane, it gets a HIGH score. If a text is measured and complies with usual academic norms but is obviously the work of a dumb person, it gets a LOW score.
+CRITICAL INSTRUCTIONS:
+- This is a COMPREHENSIVE analysis requiring EXTENSIVE detail and evidence
+- EVERY single statement you make MUST be supported by DIRECT QUOTES from the text
+- Your analysis must be AT LEAST 3000 words
+- For EACH of the ${questions.split('\n').filter(q => q.trim().length > 0).length} questions below, you MUST:
+  1. Quote MULTIPLE relevant passages (minimum 2-3 quotes per question)
+  2. Provide DETAILED arguments (minimum 100 words per question)
+  3. Show EXACTLY how the evidence supports your judgment
 
-You are NOT grading. You are NOT applying academic criteria. You are NOT comparing to other academic texts. You are assessing RAW INTELLIGENCE displayed in the writing.
+SCORING PRINCIPLES:
+- Score N/100 means author is smarter than N% of general population
+- 83/100 = only 17/100 people in Walmart are smarter
+- Judge RAW INTELLIGENCE, not academic polish
+- Brilliant but unconventional = HIGH score
+- Polished but dumb = LOW score
 
-A score of N/100 means the author is smarter than N% of the general population. 83/100 means only 17 out of 100 people are smarter than this author.
+COMPREHENSIVE ANALYSIS FORMAT:
 
-METAPOINT 1: This is NOT a grading app. You assess INTELLIGENCE of what you are given. Brilliant fragment = high score regardless of academic conventions. You are NOT grading essays. You are NOT looking for academic completeness. Answer based purely on intelligence displayed.
+For EACH question below, you must write:
 
-METAPOINT 2: Do NOT overvalue academic conventions. Confident speech is not "shutting down inquiry". Casual speech does not mean disorganized thoughts. Judge INTELLIGENCE, not presentation style.
+QUESTION: [restate the question]
 
-METAPOINT 3: Start by summarizing and categorizing the text.
+EVIDENCE FROM TEXT:
+Quote 1: "[exact quote from text]"
+Quote 2: "[exact quote from text]"  
+Quote 3: "[exact quote from text]"
 
-METAPOINT 4: Do NOT change scoring based on text category. Advanced scholarship gets evaluated against general population, not just academics.
+DETAILED ANALYSIS:
+[Write 100-200 words analyzing how these quotes answer the question. Be specific about what the quotes reveal about intelligence. Reference the exact words and phrases. Explain the logical connections. Discuss what this says about the author's cognitive abilities.]
 
-METAPOINT 5: This is NOT a grading app. Do NOT penalize boldness or unconventional thinking. Raw insight matters, not argumentation style. Smart = smart, period.
+JUDGMENT: [Your assessment for this specific question]
 
-METAPOINT 6: Scores are intelligence percentiles: 83/100 means 17/100 people in Walmart are smarter than this author.
-
-MANDATORY EVIDENCE REQUIREMENT:
-For EVERY question you answer, you MUST:
-1. Quote specific passages from the text (use quotation marks)
-2. Provide a detailed argument explaining why that quote supports your judgment
-3. Connect the evidence to the intelligence question being asked
-
-Do NOT make general statements without textual evidence. Do NOT provide assessments without quotes. EVERY claim must be backed by specific text.
-
-FORMAT YOUR RESPONSE:
-- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
-- Use actual quotes in "quotation marks" from the text
-- Explain your reasoning step by step
-- Be specific, not generic
+---
 
 ${questions}
 
-Remember: INTELLIGENCE assessment, NOT academic grading. Brilliant but crazy = high score. Dumb but conventional = low score.
+REQUIREMENTS:
+- Answer ALL questions with the format above
+- Minimum 3 quotes per question
+- Minimum 100 words analysis per question
+- Total response must exceed 3000 words
+- Be brutally honest about intelligence level
+- Support EVERY claim with textual evidence
 
-EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
+After analyzing all questions, provide:
 
-Write in plain text only. End with: FINAL SCORE: [actual number]/100
+OVERALL INTELLIGENCE ASSESSMENT: [500+ word summary integrating all evidence]
+
+FINAL SCORE: [number]/100
+
+TEXT TO ANALYZE:
+${text}`;
+}
+
+// PHASE 1: QUICK - Brief analysis for fast mode
+function createPhase1Prompt(text: string, questions: string): string {
+  return `QUICK INTELLIGENCE ANALYSIS
+
+Score N/100 means author is smarter than N% of general population.
+Judge RAW INTELLIGENCE only, not academic polish.
+
+${questions}
+
+Provide brief assessment with key evidence. Include quotes to support major points.
+
+FINAL SCORE: [number]/100
 
 TEXT:
 ${text}`;
 }
 
-// PHASE 2: Pushback exactly as specified
-function createPhase2Prompt(score: number, text: string, questions: string): string {
+// PHASE 2: COMPREHENSIVE pushback with detailed re-analysis
+function createPhase2ComprehensivePrompt(score: number, text: string, questions: string): string {
   const peopleOutperforming = 100 - score;
-  return `Your position is that ${peopleOutperforming}/100 outperform the author with respect to the cognitive metric defined by the question: that is your position, am I right? And are you sure about that?
+  return `PHASE 2: COMPREHENSIVE PUSHBACK AND RE-EVALUATION
 
-Answer the following questions about the text de novo:
+Your initial position was that ${peopleOutperforming}/100 people outperform this author in intelligence.
+That means ${peopleOutperforming} out of 100 people in Walmart are running rings around this person.
+
+Are you SURE about that assessment? Re-analyze the text with even MORE rigorous evidence.
 
 ${questions}
 
-MANDATORY EVIDENCE REQUIREMENT:
-For EVERY question you answer, you MUST:
-1. Quote specific passages from the text (use quotation marks)
-2. Provide a detailed argument explaining why that quote supports your judgment
-3. Connect the evidence to the intelligence question being asked
+COMPREHENSIVE RE-ANALYSIS REQUIREMENTS:
+- For EACH question, provide 2-3 NEW quotes you may have overlooked
+- Write 150+ words per question analyzing the evidence
+- Be MORE critical and look for intelligence signals you may have missed
+- Challenge your initial assessment with fresh evidence
+- Total response must exceed 2500 words
 
-FORMAT YOUR RESPONSE:
-- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
-- Use actual quotes in "quotation marks" from the text
-- Explain your reasoning step by step
-- Be specific, not generic
+Use the same detailed format as Phase 1.
 
-EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
+FINAL SCORE: [NUMBER]/100
 
-End with: FINAL SCORE: [NUMBER]/100
+TEXT:
+${text}`;
+}
+
+// PHASE 2: Quick pushback for fast mode  
+function createPhase2Prompt(score: number, text: string, questions: string): string {
+  const peopleOutperforming = 100 - score;
+  return `Your position is that ${peopleOutperforming}/100 outperform the author. Are you sure?
+
+${questions}
+
+Brief re-assessment with key evidence.
+
+FINAL SCORE: [NUMBER]/100
 
 TEXT:
 ${text}`;
@@ -289,57 +329,38 @@ export async function executeNormalProtocol(
   };
 }
 
-// COMPREHENSIVE PROTOCOL - All 4 phases with chunking for high quality
+// COMPREHENSIVE PROTOCOL - Ultra-detailed evidence-based 4-phase analysis
 export async function executeComprehensiveProtocol(
   text: string,
   provider: 'openai' | 'anthropic' | 'deepseek' | 'perplexity'
 ): Promise<any> {
-  console.log(`CHUNKED 4-PHASE INTELLIGENCE EVALUATION: Analyzing ${text.length} characters with protocol`);
-  console.log(`EXECUTING CHUNKED 4-PHASE PROTOCOL FOR INTELLIGENCE WITH ${provider.toUpperCase()}`);
+  console.log(`COMPREHENSIVE 4-PHASE INTELLIGENCE EVALUATION: Analyzing ${text.length} characters`);
+  console.log(`COMPREHENSIVE MODE - DETAILED EVIDENCE-BASED ANALYSIS WITH ${provider.toUpperCase()}`);
   
   const questions = EXACT_COMPLETE_QUESTIONS;
   
-  // CHUNK THE TEXT FOR HIGH QUALITY ANALYSIS - 500 words per chunk
-  const chunks = chunkText(text, 500); // 500 words per chunk as requested
-  console.log(`TEXT SPLIT INTO ${chunks.length} CHUNKS (500 words each) for comprehensive analysis`);
+  // PHASE 1: COMPREHENSIVE DETAILED ANALYSIS (NO CHUNKING - analyze full text with extensive detail)
+  console.log(`PHASE 1 COMPREHENSIVE: Starting ultra-detailed analysis of full text`);
+  const phase1Prompt = createPhase1ComprehensivePrompt(text, questions);
+  const phase1Response = await callLLMProvider(provider, [
+    { role: 'user', content: phase1Prompt }
+  ]);
+  let phase1Score = extractScore(phase1Response);
   
-  let combinedAnalyses: string[] = [];
-  let chunkScores: number[] = [];
-  
-  // ANALYZE EACH CHUNK SEPARATELY
-  for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i];
-    console.log(`PHASE 1 CHUNK ${i+1}/${chunks.length}: Analyzing ${chunk.length} characters`);
-    
-    const chunkPrompt = createPhase1Prompt(chunk, questions);
-    const chunkResponse = await callLLMProvider(provider, [
-      { role: 'user', content: chunkPrompt }
-    ]);
-    
-    combinedAnalyses.push(chunkResponse);
-    chunkScores.push(extractScore(chunkResponse));
-    
-    console.log(`CHUNK ${i+1} SCORE: ${chunkScores[i]}/100`);
-  }
-  
-  // COMBINE ALL CHUNK ANALYSES
-  const combinedText = combinedAnalyses.join('\n\n---CHUNK SEPARATOR---\n\n');
-  const averageScore = Math.round(chunkScores.reduce((a, b) => a + b, 0) / chunkScores.length);
-  let phase1Score = averageScore;
+  console.log(`PHASE 1 COMPREHENSIVE COMPLETE: Score ${phase1Score}/100, Response length: ${phase1Response.length} chars`);
   
   let phase2Response = '';
   let phase2Score = phase1Score;
   
-  console.log(`PHASE 1 AVERAGE SCORE: ${phase1Score}/100 across ${chunks.length} chunks`);
-  
-  // PHASE 2: Pushback if score < 95 (using first chunk for efficiency)
+  // PHASE 2: Comprehensive pushback if score < 95
   if (phase1Score < 95) {
-    console.log(`PHASE 2: Score ${phase1Score} < 95, applying pushback to first chunk`);
-    const phase2Prompt = createPhase2Prompt(phase1Score, chunks[0], questions);
+    console.log(`PHASE 2 COMPREHENSIVE: Score ${phase1Score} < 95, applying detailed pushback`);
+    const phase2Prompt = createPhase2ComprehensivePrompt(phase1Score, text, questions);
     phase2Response = await callLLMProvider(provider, [
       { role: 'user', content: phase2Prompt }
     ]);
     phase2Score = extractScore(phase2Response);
+    console.log(`PHASE 2 COMPREHENSIVE COMPLETE: Revised score ${phase2Score}/100`);
   } else {
     console.log(`PHASE 2: Score ${phase1Score} >= 95, no pushback needed`);
     phase2Response = 'No pushback needed - score was already >= 95/100';
@@ -385,8 +406,8 @@ export async function executeComprehensiveProtocol(
   const phases = {
     phase1: {
       score: phase1Score,
-      response: cleanResponse(combinedText),
-      prompt: "Chunked Intelligence Evaluation using exact 18-question protocol"
+      response: cleanResponse(phase1Response),
+      prompt: "Comprehensive Evidence-Based Intelligence Evaluation"
     },
     phase2: {
       score: phase2Score,
@@ -406,10 +427,10 @@ export async function executeComprehensiveProtocol(
   return {
     provider,
     overallScore: finalScore,
-    analysis: cleanResponse(combinedText), // Combined analysis from all chunks
+    analysis: cleanResponse(phase1Response), // Comprehensive Phase 1 analysis
     phases, // Detailed breakdown of all phases
     evaluationType: 'intelligence',
-    formattedReport: cleanResponse(combinedText) // Combined comprehensive analysis
+    formattedReport: cleanResponse(phase1Response) // Comprehensive analysis
   };
 }
 
