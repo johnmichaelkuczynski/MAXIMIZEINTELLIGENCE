@@ -2025,11 +2025,11 @@ PROVIDE A FINAL VALIDATED SCORE OUT OF 100 IN THE FORMAT: SCORE: X/100
         // Perform re-rewrite
         const rewrittenText = await aiProviderService.rewrite(provider || originalJob.provider, {
           inputText: originalJob.outputText,
-          styleText: originalJob.styleText,
-          contentMixText: originalJob.contentMixText,
-          customInstructions: customInstructions || originalJob.customInstructions,
+          styleText: originalJob.styleText || undefined,
+          contentMixText: originalJob.contentMixText || undefined,
+          customInstructions: customInstructions || originalJob.customInstructions || undefined,
           selectedPresets: selectedPresets || originalJob.selectedPresets,
-          mixingMode: originalJob.mixingMode,
+          mixingMode: (originalJob.mixingMode as 'style' | 'content' | 'both') || undefined,
         });
 
         // Analyze new output

@@ -1895,7 +1895,7 @@ Generated on: ${new Date().toLocaleString()}`;
                           />
                           <div>
                             <div className="font-medium text-gray-900 dark:text-gray-100">{preset}</div>
-                            <div className="text-gray-600 dark:text-gray-400">{description}</div>
+                            <div className="text-gray-600 dark:text-gray-400">{String(description)}</div>
                           </div>
                         </label>
                       ))}
@@ -1946,8 +1946,10 @@ Generated on: ${new Date().toLocaleString()}`;
                       value={boxA}
                       onChange={(e) => {
                         setBoxA(e.target.value);
-                        if (e.target.value.length > 100) {
-                          debounce(() => evaluateTextAI(e.target.value, setBoxAScore), 2000)();
+                        if (e.target.value.trim()) {
+                          debounce(() => evaluateTextAI(e.target.value, setBoxAScore), 1000)();
+                        } else {
+                          setBoxAScore(null);
                         }
                       }}
                       placeholder="Paste or upload AI-generated text here that needs to be humanized..."
@@ -2011,8 +2013,10 @@ Generated on: ${new Date().toLocaleString()}`;
                       value={boxB}
                       onChange={(e) => {
                         setBoxB(e.target.value);
-                        if (e.target.value.length > 100) {
-                          debounce(() => evaluateTextAI(e.target.value, setBoxBScore), 2000)();
+                        if (e.target.value.trim()) {
+                          debounce(() => evaluateTextAI(e.target.value, setBoxBScore), 1000)();
+                        } else {
+                          setBoxBScore(null);
                         }
                       }}
                       placeholder="Paste or upload human-written text whose style you want to mimic..."

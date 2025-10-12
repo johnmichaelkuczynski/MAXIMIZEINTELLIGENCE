@@ -45,6 +45,20 @@ You do not make assumptions about the level of the paper; it could be a work of 
 
 If a work is a work of genius, you say that, and you say why; you do not shy away from giving what might conventionally be regarded as excessively "superlative" scores; you give it the score it deserves, not the score that a midwit committee would say it deserves.
 
+MANDATORY EVIDENCE REQUIREMENT:
+For EVERY question you answer, you MUST:
+1. Quote specific passages from the text (use quotation marks)
+2. Provide a detailed argument explaining why that quote supports your judgment
+3. Connect the evidence to the intelligence question being asked
+
+FORMAT YOUR RESPONSE:
+- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
+- Use actual quotes in "quotation marks" from the text
+- Explain your reasoning step by step
+- Be specific, not generic
+
+EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
+
 TEXT:
 ${text}`;
 }

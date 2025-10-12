@@ -41,8 +41,6 @@ You are NOT grading. You are NOT applying academic criteria. You are NOT compari
 
 A score of N/100 means the author is smarter than N% of the general population. 83/100 means only 17 out of 100 people are smarter than this author.
 
-Your job: Answer these questions about intelligence and determine what percentage of the population this author surpasses in raw intelligence.
-
 METAPOINT 1: This is NOT a grading app. You assess INTELLIGENCE of what you are given. Brilliant fragment = high score regardless of academic conventions. You are NOT grading essays. You are NOT looking for academic completeness. Answer based purely on intelligence displayed.
 
 METAPOINT 2: Do NOT overvalue academic conventions. Confident speech is not "shutting down inquiry". Casual speech does not mean disorganized thoughts. Judge INTELLIGENCE, not presentation style.
@@ -55,9 +53,25 @@ METAPOINT 5: This is NOT a grading app. Do NOT penalize boldness or unconvention
 
 METAPOINT 6: Scores are intelligence percentiles: 83/100 means 17/100 people in Walmart are smarter than this author.
 
+MANDATORY EVIDENCE REQUIREMENT:
+For EVERY question you answer, you MUST:
+1. Quote specific passages from the text (use quotation marks)
+2. Provide a detailed argument explaining why that quote supports your judgment
+3. Connect the evidence to the intelligence question being asked
+
+Do NOT make general statements without textual evidence. Do NOT provide assessments without quotes. EVERY claim must be backed by specific text.
+
+FORMAT YOUR RESPONSE:
+- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
+- Use actual quotes in "quotation marks" from the text
+- Explain your reasoning step by step
+- Be specific, not generic
+
 ${questions}
 
 Remember: INTELLIGENCE assessment, NOT academic grading. Brilliant but crazy = high score. Dumb but conventional = low score.
+
+EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
 
 Write in plain text only. End with: FINAL SCORE: [actual number]/100
 
@@ -73,6 +87,20 @@ function createPhase2Prompt(score: number, text: string, questions: string): str
 Answer the following questions about the text de novo:
 
 ${questions}
+
+MANDATORY EVIDENCE REQUIREMENT:
+For EVERY question you answer, you MUST:
+1. Quote specific passages from the text (use quotation marks)
+2. Provide a detailed argument explaining why that quote supports your judgment
+3. Connect the evidence to the intelligence question being asked
+
+FORMAT YOUR RESPONSE:
+- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
+- Use actual quotes in "quotation marks" from the text
+- Explain your reasoning step by step
+- Be specific, not generic
+
+EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
 
 End with: FINAL SCORE: [NUMBER]/100
 
