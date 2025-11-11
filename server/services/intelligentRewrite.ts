@@ -47,59 +47,96 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   console.log(`Original score: ${originalScore}/100`);
   
   // Step 2: Create rewrite instructions
-  const defaultInstructions = `YOUR JOB: IDENTIFY WHAT'S MISSING AND ADD IT. DO NOT REPHRASE EXISTING TEXT.
+  const defaultInstructions = `YOUR JOB: PRESERVE THE ORIGINAL TEXT. ADD EMPIRICAL EVIDENCE AND CONCRETE EXAMPLES.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ CRITICAL: "REWRITE" MEANS ADD MISSING SUBSTANCE, NOT REPHRASE ⚠️
+⚠️ KEEP ORIGINAL TEXT INTACT. ADD EVIDENCE, EXAMPLES, DATA. ⚠️
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WHAT "MAXIMIZE INTELLIGENCE" ACTUALLY MEANS:
+WHAT TO ADD (in order of priority):
 
-1. Find arguments the text SHOULD make but DOESN'T
-2. Add counterarguments it SHOULD address but DOESN'T
-3. Provide evidence it SHOULD cite but DOESN'T
-4. Explore implications it SHOULD develop but DOESN'T
-5. Make connections to other domains it SHOULD make but DOESN'T
+1. EMPIRICAL STUDIES: Add research citations for unsupported claims
+   - "incredibly high degree of conformism" → Add Asch experiments (75% conformed, 32% of responses)
+   - "wisdom of crowds" → Add actual research on aggregated judgments
 
-THIS IS SUBSTANTIVE IMPROVEMENT, NOT STYLISTIC REPHRASING.
+2. CONCRETE EXAMPLES: Add specific cases for abstract arguments
+   - "collectives exhibit intelligence" → Add apoptosis, cellular differentiation examples
+   - "scientific progress" → Add historical analysis of specific discoveries
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EXAMPLES OF SUBSTANTIVE IMPROVEMENTS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. QUANTITATIVE DATA: Add numbers for qualitative claims
+   - "high degree" → "75% of participants"
+   - "most" → Specify actual percentages
 
-✓ ORIGINAL: "Collectives exhibit more intelligence than individuals"
-✓ IMPROVED: "Collectives exhibit more intelligence than individuals. Consider: individual neurons are simple, but brains solve differential equations. Individual ants follow pheromones, but colonies optimize foraging routes. The intelligence emerges from the structure, not the components."
-→ Added concrete examples that strengthen the argument
+4. IMPLICIT → EXPLICIT: Develop underdeveloped implications
+   - "geniuses as limiting cases" → Spell out three interpretations explicitly
+   - "collective is primary" → Explain the ontological claim
 
-✓ ORIGINAL: "This position cannot be reconciled with conformism"
-✓ IMPROVED: "This position cannot be reconciled with conformism. If individuals were truly autonomous, we'd expect 30-40% dissent on any controversial position (matching base rates of contrarianism). Instead we see 95%+ conformity even on demonstrably false beliefs. The math doesn't work."
-→ Added quantitative reasoning that makes the argument stronger
-
-✓ ORIGINAL: [Essay on group psychology]
-✓ IMPROVED: [Same essay] + "The obvious counterargument: what about rebels and innovators? But notice they're always reacting AGAINST a collective position. Einstein rebelled against Newtonian physics - a collective framework. He didn't generate physics ex nihilo. Even rebellion is group-structured."
-→ Added missing counterargument and rebuttal
+5. BIOLOGICAL/EMPIRICAL GROUNDING: Add mechanisms, not just assertions
+   - "cells sacrifice for organism" → Explain apoptosis machinery
+   - "organizations exhibit rationality" → Cite organizational routine research
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-WHAT TO ACTUALLY DO:
+EXAMPLE OF CORRECT IMPROVEMENT:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 1: Analyze what's MISSING
-- What counterargument should be addressed?
-- What evidence would strengthen this?
-- What implication could be explored?
-- What connection to another domain would help?
-- What assumption is hidden and should be made explicit?
+ORIGINAL: "This methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people"
 
-STEP 2: ADD the missing content
-- Insert new paragraphs, new arguments, new evidence
-- Keep the author's voice and style
-- Make sure additions genuinely strengthen the argument
+CORRECT IMPROVEMENT: "However, this methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people—even after intellectual shortcomings on their part are taken into account—to other people's opinions. Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority. Crucially, these effects persisted even when the correct answer was unambiguous and conformity imposed no material benefit."
 
-STEP 3: Keep existing text UNCHANGED unless it's actually wrong
-- Don't rephrase for style
-- Don't swap words for synonyms
-- Don't add academic jargon
-- Only change existing text if it's factually incorrect or logically flawed
+WHAT WAS ADDED:
+✓ Asch experiments (specific study)
+✓ 75% conformed at least once (quantitative data)
+✓ 32% of responses (more precise metric)
+✓ "effects persisted even when..." (empirical detail)
+
+WHAT WAS PRESERVED:
+✓ "This methodological stance cannot be reconciled" (exact wording)
+✓ "incredibly high degree of conformism" (exact wording)
+✓ Author's natural voice and rhythm
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ORIGINAL: "A cell is an individual organism. But how well can you understand a cell if you try to understand on its own terms?"
+
+CORRECT IMPROVEMENT: "A cell is an individual organism. But how well can you understand a cell if you try to understand it on its own terms? Pretty well but not maximally well. If you tried to understand its behavior in terms of a drive on its part to live or flourish or reproduce, you would get far. Cellular biology successfully explains many phenomena—metabolism, homeostasis, mitosis—by treating cells as autonomous units with their own survival machinery. But there would still be some unanswered, and unanswerable, questions.
+
+Consider apoptosis—programmed cell death. From an individual-cell perspective, apoptosis appears maladaptive: the cell actively dismantles itself through a genetically-encoded suicide program. Why would an organism whose fundamental drive is survival and reproduction possess elaborate mechanisms for self-destruction?"
+
+WHAT WAS ADDED:
+✓ Apoptosis as concrete example
+✓ Biological mechanism explanation
+✓ The puzzle it creates for individualist framework
+
+WHAT WAS PRESERVED:
+✓ Original question structure
+✓ Original phrasing ("Pretty well but not maximally well")
+✓ Conversational tone
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROCEDURE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Identify every unsupported claim
+- "incredibly high degree of conformism" → Needs Asch experiments
+- "wisdom of crowds" → Needs actual research citation
+- "collectives exhibit more intelligence" → Needs concrete examples (apoptosis, neurons/brains)
+
+STEP 2: For each unsupported claim, add:
+- Specific study name (Solomon Asch, James Surowiecki, etc.)
+- Quantitative data (75%, 32%, etc.)
+- Concrete biological/organizational example
+- Mechanism explanation (how/why it works)
+
+STEP 3: Preserve original text EXACTLY
+- Keep "Most people, including most psychologists" (don't change to "The prevailing assumption")
+- Keep "it is hard to believe" (don't change to "this is impossible" unless you can prove it)
+- Keep author's casual, direct voice
+- Only add content BETWEEN original sentences, never replace them
+
+STEP 4: Develop implicit points explicitly
+- "geniuses as limiting cases" → Spell out all three interpretations
+- "collective is primary" → Explain what this means ontologically
+- Add 2-3 paragraphs developing underdeveloped implications
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FORBIDDEN ACTIONS:
@@ -113,15 +150,22 @@ FORBIDDEN ACTIONS:
 ❌ Rephrasing clear statements in fancier words
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OUTPUT FORMAT:
+OUTPUT REQUIREMENTS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Return the COMPLETE text with:
-- Original text preserved (same words, same style)  
-- New substantive additions inserted where they strengthen the argument
-- NO stylistic changes unless they fix actual errors
+MANDATORY:
+1. Original sentences must appear VERBATIM (exact same words)
+2. Add empirical studies, quantitative data, concrete examples BETWEEN original sentences
+3. Expand underdeveloped implications with 1-3 new paragraphs
+4. Keep author's natural, conversational voice
+5. Never rephrase, never swap synonyms, never make it sound more academic
 
-If the text is already near-perfect, ADD 1-3 paragraphs of missing content rather than rephrasing what's there.`;
+RESULT SHOULD BE:
+- Original text 100% preserved
+- 2-3x longer due to evidence and examples
+- Every claim now backed by specific study or concrete case
+- Implicit arguments made fully explicit
+- Same voice, same style, more substance`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
