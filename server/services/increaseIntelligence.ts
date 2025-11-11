@@ -4,6 +4,7 @@
 export interface IncreaseIntelligenceRequest {
   text: string;
   provider: string;
+  customInstructions?: string;
 }
 
 export interface IncreaseIntelligenceResult {
@@ -30,11 +31,14 @@ function countWords(text: string): number {
 }
 
 export async function performIncreaseIntelligence(request: IncreaseIntelligenceRequest): Promise<IncreaseIntelligenceResult> {
-  const { text, provider: rawProvider } = request;
+  const { text, provider: rawProvider, customInstructions } = request;
   const provider = mapZhiToProvider(rawProvider);
   
   console.log(`Starting intelligence increase with ${provider}`);
   console.log(`Original text length: ${text.length} characters, ${countWords(text)} words`);
+  if (customInstructions) {
+    console.log(`Custom instructions: ${customInstructions}`);
+  }
   
   // Intelligence Maximization Prompt - Based on specification document
   const prompt = `INTELLIGENCE MAXIMIZATION TASK
@@ -125,6 +129,7 @@ INPUT TEXT TO EXPAND
 
 ${text}
 
+${customInstructions ? `\nADDITIONAL CUSTOM INSTRUCTIONS FROM USER:\n${customInstructions}\n\nYou MUST follow these custom instructions while still maintaining all the core principles above (expansion, empirical grounding, explicit reasoning, citations, preservation of arguments).\n` : ''}
 OUTPUT FORMAT - CRITICAL
 
 ABSOLUTELY NO MARKDOWN FORMATTING:

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Zap, Loader2, Download, Copy, Check } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Zap, Loader2, Download, Copy, Check, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface IncreaseIntelligenceButtonProps {
@@ -19,10 +20,13 @@ const IncreaseIntelligenceButton: React.FC<IncreaseIntelligenceButtonProps> = ({
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [copied, setCopied] = useState(false);
+  const [customInstructions, setCustomInstructions] = useState("");
   const { toast } = useToast();
 
-  const handleIncreaseIntelligence = async () => {
-    if (!originalText || !originalText.trim()) {
+  const handleIncreaseIntelligence = async (textToExpand?: string, instructions?: string) => {
+    const inputText = textToExpand || originalText;
+    
+    if (!inputText || !inputText.trim()) {
       toast({
         title: "No text provided",
         description: "Please provide text to expand.",
@@ -37,8 +41,9 @@ const IncreaseIntelligenceButton: React.FC<IncreaseIntelligenceButtonProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: originalText,
-          provider
+          text: inputText,
+          provider,
+          customInstructions: instructions || undefined
         })
       });
 
@@ -54,6 +59,7 @@ const IncreaseIntelligenceButton: React.FC<IncreaseIntelligenceButtonProps> = ({
 
       setResult(data.result);
       setShowResultsModal(true);
+      setCustomInstructions(""); // Reset custom instructions after successful rewrite
       
       toast({
         title: "Intelligence increased successfully",
@@ -70,6 +76,22 @@ const IncreaseIntelligenceButton: React.FC<IncreaseIntelligenceButtonProps> = ({
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const handleRecursiveRewrite = async () => {
+    if (!result?.expandedText) return;
+    
+    if (!customInstructions.trim()) {
+      toast({
+        title: "Custom instructions required",
+        description: "Please enter custom instructions for the rewrite.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Use the current expanded text as the new input with custom instructions
+    await handleIncreaseIntelligence(result.expandedText, customInstructions);
   };
 
   const handleCopy = () => {
@@ -120,7 +142,7 @@ Generated: ${new Date().toLocaleString()}`;
   return (
     <>
       <Button
-        onClick={handleIncreaseIntelligence}
+        onClick={() => handleIncreaseIntelligence()}
         disabled={isProcessing || !originalText.trim()}
         className={className || "flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"}
         size={className ? undefined : "sm"}
@@ -209,10 +231,45 @@ Generated: ${new Date().toLocaleString()}`;
                   <p className="whitespace-pre-wrap text-sm text-gray-600 dark:text-gray-400">{result.originalText}</p>
                 </div>
               </div>
+
+              {/* Recursive Rewrite Section */}
+              <div className="border-t pt-4">
+                <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                  <RefreshCw className="h-5 w-5 text-purple-600" />
+                  Recursive Rewrite
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Rewrite the expanded text again with your custom instructions (e.g., "add more statistical data", "cite neuroscience research", "make more technical")
+                </p>
+                <Textarea
+                  placeholder="Enter custom instructions for rewriting (e.g., 'add more statistical evidence', 'cite Carl Hempel', 'include case studies')..."
+                  value={customInstructions}
+                  onChange={(e) => setCustomInstructions(e.target.value)}
+                  className="min-h-[80px] mb-3"
+                  disabled={isProcessing}
+                />
+                <Button
+                  onClick={handleRecursiveRewrite}
+                  disabled={isProcessing || !customInstructions.trim()}
+                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white flex items-center justify-center gap-2"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Rewriting...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4" />
+                      Rewrite Again with Instructions
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
           )}
 
-          <DialogFooter className="flex gap-2">
+          <DialogFooter className="flex gap-2 mt-4">
             <Button
               variant="outline"
               onClick={handleDownload}
