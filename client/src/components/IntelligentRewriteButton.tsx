@@ -194,9 +194,6 @@ const IntelligentRewriteButton: React.FC<IntelligentRewriteButtonProps> = ({
                       <CopyButton text={rewriteResult.rewrittenText} />
                       <SendToButton 
                         text={rewriteResult.rewrittenText}
-                        onSendToHumanizer={onSendToHumanizer}
-                        onSendToIntelligence={onSendToIntelligence}
-                        onSendToChat={onSendToChat}
                       />
                     </div>
                   </div>
