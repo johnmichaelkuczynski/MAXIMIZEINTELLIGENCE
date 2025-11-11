@@ -222,13 +222,15 @@ async function makeOpenAIRequest(prompt: string): Promise<string> {
 
 async function makeAnthropicRequest(prompt: string): Promise<string> {
   const response = await anthropic.messages.create({
-    model: "claude-3-5-sonnet-20241022",
+    model: "claude-sonnet-4-5-20250929",
     max_tokens: 4000,
     messages: [{ role: "user", content: prompt }],
     temperature: 0.2
   });
   
-  return response.content[0].type === 'text' ? response.content[0].text : "";
+  const text = response.content[0].type === 'text' ? response.content[0].text : "";
+  console.log('Anthropic case assessment response (first 500 chars):', text.substring(0, 500));
+  return text;
 }
 
 async function makePerplexityRequest(prompt: string): Promise<string> {
@@ -257,7 +259,7 @@ async function makePerplexityRequest(prompt: string): Promise<string> {
 }
 
 async function makeDeepSeekRequest(prompt: string): Promise<string> {
-  const response = await fetch('https://api.deepseek.com/chat/completions', {
+  const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -274,11 +276,15 @@ async function makeDeepSeekRequest(prompt: string): Promise<string> {
   });
   
   if (!response.ok) {
+    const errorText = await response.text();
+    console.error('DeepSeek API error:', response.status, errorText);
     throw new Error(`DeepSeek API error: ${response.status}`);
   }
   
   const data: any = await response.json();
-  return data.choices?.[0]?.message?.content || "";
+  const text = data.choices?.[0]?.message?.content || "";
+  console.log('DeepSeek case assessment response (first 500 chars):', text.substring(0, 500));
+  return text;
 }
 
 export async function performCaseAssessment(
