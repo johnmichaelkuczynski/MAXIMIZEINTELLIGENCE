@@ -120,16 +120,57 @@ TEXT TO ANALYZE:
 ${text}`;
 }
 
-// PHASE 1: QUICK - Brief analysis for fast mode
+// PHASE 1: QUICK - Brief but EVIDENCE-BASED analysis for fast mode
 function createPhase1Prompt(text: string, questions: string): string {
-  return `QUICK INTELLIGENCE ANALYSIS
+  return `QUICK INTELLIGENCE ANALYSIS (Evidence-Based)
 
-Score N/100 means author is smarter than N% of general population.
-Judge RAW INTELLIGENCE only, not academic polish.
+═══════════════════════════════════════════════════════════════
+PERCENTILE SCORING SYSTEM (MANDATORY INTERPRETATION):
+═══════════════════════════════════════════════════════════════
+A score of N/100 means the author is SMARTER THAN N% of all human writers.
+This is a PERCENTILE RANKING of global cognitive rarity, NOT a grade.
+
+100/100 = Top 0.001% of human cognition (virtually unmatched genius)
+95/100  = Top 0.1% of humanity (1 in 1,000 people)
+85/100  = Top 15% of humanity (smarter than 85% of all humans)
+50/100  = Median human intelligence (average person)
+
+DO NOT MODERATE OR ADJUST SCORES. Give the RAW intelligence assessment.
+Judge RAW COGNITIVE ABILITY, not academic polish or conformity.
+
+═══════════════════════════════════════════════════════════════
+ABSOLUTE MANDATORY EVIDENCE REQUIREMENT:
+═══════════════════════════════════════════════════════════════
+For EACH question below, you MUST:
+1. Provide 2-3 DIRECT QUOTES from the text in "quotation marks"
+2. Write a paragraph (50-100 words) analyzing those SPECIFIC quotes
+3. Reference EXACT words and phrases from the text
+
+DO NOT WRITE GENERIC STATEMENTS LIKE:
+❌ "The text presents a thought-provoking perspective..."
+❌ "Yes, the text develops its main thesis..."
+❌ "The organization is hierarchical..."
+❌ "The writing is insightful..."
+
+INSTEAD, WRITE EVIDENCE-BASED ANALYSIS LIKE:
+✓ The author states: "[exact quote]" which demonstrates insight because... [detailed analysis referencing specific words]
+
+FORMAT FOR EACH QUESTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTION: [restate question]
+
+EVIDENCE:
+"[Quote 1]"
+"[Quote 2]"
+
+ANALYSIS: [50-100 words analyzing these SPECIFIC quotes - NO GENERIC STATEMENTS]
+
+JUDGMENT: [Your assessment]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you write even ONE answer without specific quotes, you have FAILED.
 
 ${questions}
-
-Provide brief assessment with key evidence. Include quotes to support major points.
 
 FINAL SCORE: [number]/100
 
@@ -184,11 +225,50 @@ ${text}`;
 // PHASE 2: Quick pushback for fast mode  
 function createPhase2Prompt(score: number, text: string, questions: string): string {
   const peopleOutperforming = 100 - score;
-  return `Your position is that ${peopleOutperforming}/100 outperform the author. Are you sure?
+  return `PHASE 2 PUSHBACK: Re-evaluate with FRESH EVIDENCE
+
+Your position: ${peopleOutperforming}/100 people outperform this author in intelligence.
+Translation: ${peopleOutperforming} out of 100 people in Walmart are running cognitive rings around this person.
+
+═══════════════════════════════════════════════════════════════
+PERCENTILE SCORING SYSTEM (MANDATORY INTERPRETATION):
+═══════════════════════════════════════════════════════════════
+${score}/100 means this author is smarter than ${score}% of ALL HUMANS.
+
+100/100 = Top 0.001% of human cognition (virtually unmatched genius)
+95/100  = Top 0.1% of humanity (1 in 1,000 people)
+85/100  = Top 15% of humanity (smarter than 85% of all humans)
+50/100  = Median human intelligence (average person)
+
+DO NOT MODERATE OR ADJUST SCORES. Give the RAW intelligence assessment.
+
+Are you SURE? Re-analyze with NEW quotes you may have overlooked.
 
 ${questions}
 
-Brief re-assessment with key evidence.
+DO NOT WRITE GENERIC STATEMENTS LIKE:
+❌ "The text is insightful..."
+❌ "The points are well developed..."
+❌ "The organization is effective..."
+
+INSTEAD, WRITE EVIDENCE-BASED ANALYSIS:
+✓ The author writes: "[exact quote]" which reveals... [analysis of specific words]
+
+MANDATORY FORMAT FOR EACH QUESTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTION: [restate question]
+
+EVIDENCE:
+"[Quote 1]"
+"[Quote 2]"
+
+ANALYSIS: [50-100 words analyzing these SPECIFIC quotes - NO GENERIC STATEMENTS]
+
+JUDGMENT: [Your assessment]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every answer must use this format with 2-3 NEW quotes and detailed analysis.
+DO NOT moderate your score - give the RAW percentile.
 
 FINAL SCORE: [NUMBER]/100
 

@@ -106,14 +106,41 @@ function createPhase2Prompt(score: number): string {
   return `Your position is that ${outperformPercentage}/100 people outperform the author in intelligence.
 That means ${outperformPercentage} out of 100 people in Walmart are running cognitive rings around this person.
 
-PERCENTILE REMINDER:
+═══════════════════════════════════════════════════════════════
+PERCENTILE SCORING SYSTEM (MANDATORY INTERPRETATION):
+═══════════════════════════════════════════════════════════════
 ${score}/100 means this author is smarter than ${score}% of ALL HUMANS.
+
+100/100 = Top 0.001% of human cognition (virtually unmatched genius)
+95/100  = Top 0.1% of humanity (1 in 1,000 people)
+85/100  = Top 15% of humanity (smarter than 85% of all humans)
+75/100  = Top 25% of humanity
+50/100  = Median human intelligence (average person)
+25/100  = Bottom 25% of humanity
+
+DO NOT MODERATE OR ADJUST SCORES. Give the RAW intelligence assessment.
+
 Is that REALLY your assessment? Are you SURE?
 
 Re-answer these questions with FRESH EVIDENCE you may have overlooked:
 ${EVALUATION_QUESTIONS}
 
-MANDATORY: Every answer must include 2-3 NEW quotes from the text with detailed analysis.
+MANDATORY FORMAT FOR EACH QUESTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTION: [restate the question]
+
+EVIDENCE FROM TEXT:
+"[Direct quote 1 from the text]"
+"[Direct quote 2 from the text]"
+"[Direct quote 3 from the text]"
+
+ANALYSIS:
+[100+ word paragraph analyzing these SPECIFIC quotes. Reference the exact words. NO GENERIC STATEMENTS.]
+
+JUDGMENT: [Your specific answer to this question]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every answer must use this format with 2-3 NEW quotes and detailed analysis.
 DO NOT give generic assessments. Quote the actual text.
 DO NOT moderate your score. Give the RAW intelligence percentile.
 
