@@ -45,12 +45,25 @@ const AnalysisReport: React.FC<AnalysisReportProps> = ({
   comparison,
   mode
 }) => {
+  const getPercentileDescription = (score: number | undefined): string => {
+    if (!score) return 'Score not available';
+    if (score >= 99) return `Top 0.01% of human cognition (smarter than ${score}% of all humans)`;
+    if (score >= 95) return `Top 0.1% of humanity (smarter than ${score}% of all humans)`;
+    if (score >= 90) return `Top 10% of humanity (smarter than ${score}% of all humans)`;
+    if (score >= 85) return `Top 15% of humanity (smarter than ${score}% of all humans)`;
+    if (score >= 75) return `Top 25% of humanity (smarter than ${score}% of all humans)`;
+    if (score >= 60) return `Above average (smarter than ${score}% of all humans)`;
+    if (score >= 50) return `Around median human intelligence (smarter than ${score}% of all humans)`;
+    if (score >= 25) return `Below average (smarter than ${score}% of all humans)`;
+    return `Bottom quartile (smarter than ${score}% of all humans)`;
+  };
+
   // Prepare data for doughnut chart (overall score)
   const doughnutDataA = {
     labels: ['Score', 'Remaining'],
     datasets: [
       {
-        data: [analysisA.overallScore, 100 - analysisA.overallScore],
+        data: [analysisA.overallScore || 0, 100 - (analysisA.overallScore || 0)],
         backgroundColor: [
           'rgba(54, 162, 235, 0.8)',
           'rgba(200, 200, 200, 0.2)',
@@ -203,7 +216,10 @@ const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
       {/* Overall Score Section */}
       <div className="mt-8 px-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Overall Intelligence Assessment</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Overall Intelligence Assessment</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Score N/100 = Percentile ranking (author is smarter than N% of all humans)
+        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-4 rounded-lg shadow">
@@ -232,11 +248,19 @@ const AnalysisReport: React.FC<AnalysisReportProps> = ({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <span className="text-4xl font-bold text-blue-600">
-                    {analysisA.overallScore}
+                    {analysisA.overallScore || 0}
                   </span>
                   <span className="text-gray-500 text-sm block">/100</span>
                 </div>
               </div>
+            </div>
+            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <p className="text-sm text-blue-900 dark:text-blue-100 font-medium text-center">
+                📊 {getPercentileDescription(analysisA.overallScore)}
+              </p>
+              <p className="text-xs text-blue-700 dark:text-blue-300 text-center mt-1">
+                Only {100 - (analysisA.overallScore || 0)} out of 100 people are cognitively superior
+              </p>
             </div>
           </div>
 
@@ -249,7 +273,7 @@ const AnalysisReport: React.FC<AnalysisReportProps> = ({
                     labels: ['Score', 'Remaining'],
                     datasets: [
                       {
-                        data: [analysisB.overallScore, 100 - analysisB.overallScore],
+                        data: [analysisB.overallScore || 0, 100 - (analysisB.overallScore || 0)],
                         backgroundColor: [
                           'rgba(255, 99, 132, 0.8)',
                           'rgba(200, 200, 200, 0.2)',
@@ -281,11 +305,19 @@ const AnalysisReport: React.FC<AnalysisReportProps> = ({
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <span className="text-4xl font-bold text-pink-600">
-                      {analysisB.overallScore}
+                      {analysisB.overallScore || 0}
                     </span>
                     <span className="text-gray-500 text-sm block">/100</span>
                   </div>
                 </div>
+              </div>
+              <div className="mt-4 p-3 bg-pink-50 dark:bg-pink-900/20 rounded-lg border border-pink-200 dark:border-pink-800">
+                <p className="text-sm text-pink-900 dark:text-pink-100 font-medium text-center">
+                  📊 {getPercentileDescription(analysisB.overallScore)}
+                </p>
+                <p className="text-xs text-pink-700 dark:text-pink-300 text-center mt-1">
+                  Only {100 - (analysisB.overallScore || 0)} out of 100 people are cognitively superior
+                </p>
               </div>
             </div>
           )}
