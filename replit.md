@@ -4,6 +4,14 @@
 This platform analyzes written text to assess the intelligence and cognitive fingerprint of authors using multi-model AI evaluation. It provides document analysis, AI detection, translation, comprehensive cognitive profiling, and intelligent text rewriting capabilities. The project's vision is to offer deep insights into cognitive abilities and thought processes from written content, with advanced features for maximizing intelligence scores through iterative rewriting.
 
 ## Recent Changes
+- **January 2025**: **INTELLIGENT REWRITE FUNCTION COMPLETELY REBUILT** - Total overhaul to produce substantiation+development, not rewording
+  - ✅ **Rewrote entire prompt system**: "NEVER EVER IMPROVE BY REWORDING. ALL ADDITIONS MUST BE SUBSTANTIVE, NOT PHRASEOLOGICAL."
+  - ✅ **INPUT→OUTPUT example embedded**: Includes exact example showing group psychology essay transformation with Asch experiments, apoptosis, cellular differentiation
+  - ✅ **Four types of additions specified**: (1) Empirical studies with quantitative data, (2) Concrete examples from biology/psychology/organizations, (3) Explicit development of implicit points, (4) Mechanisms explaining HOW and WHY
+  - ✅ **Minor structural edits allowed**: Semicolon→period, "But"→"However", breaking long sentences for clarity (ONLY for structure, never for style)
+  - ✅ **Explicit forbidden actions**: No synonym swapping, no "wherein"/"whereby" padding, no casual→academic voice changes, no rephrasing without adding meaning
+  - ✅ **Result specification**: Core sentences/phrases preserved, 2-3x longer from evidence/examples, same voice/rhythm with more substance
+  - File updated: server/services/intelligentRewrite.ts (lines 50-100)
 - **January 2025**: **MANDATORY QUOTE ENFORCEMENT COMPLETED** - Complete overhaul of all analysis prompts to force evidence-based evaluation
   - ✅ **All prompts now MANDATE direct quotes**: Every analysis must include 2-4 direct quotes from text with detailed analysis (no generic statements allowed)
   - ✅ **Explicit percentile scoring system**: Added percentile interpretation tables to all prompts (100=top 0.001%, 95=top 0.1%, 85=top 15%, 50=median)
