@@ -26,6 +26,7 @@ import { AnalysisMode, DocumentInput as DocumentInputType, AIDetectionResult, Do
 import { useToast } from "@/hooks/use-toast";
 import CopyButton from "@/components/CopyButton";
 import SendToButton from "@/components/SendToButton";
+import IncreaseIntelligenceButton from "@/components/IncreaseIntelligenceButton";
 import { useTextTransfer } from "@/contexts/TextTransferContext";
 
 const HomePage: React.FC = () => {
@@ -1274,6 +1275,16 @@ const HomePage: React.FC = () => {
                   </span>
                 </Button>
                 <p className="text-xs text-gray-500 mt-2">Evaluate creative writing quality</p>
+              </div>
+
+              {/* Increase Intelligence */}
+              <div className="text-center">
+                <IncreaseIntelligenceButton
+                  originalText={documentA.content}
+                  provider="zhi2"
+                  className="w-full px-4 py-6 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-md font-semibold hover:from-purple-700 hover:to-purple-800 flex flex-col items-center min-h-[100px]"
+                />
+                <p className="text-xs text-gray-500 mt-2">Expand text with empirical grounding</p>
               </div>
             </div>
             

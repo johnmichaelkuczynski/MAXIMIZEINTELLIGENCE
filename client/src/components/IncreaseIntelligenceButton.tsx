@@ -122,19 +122,19 @@ Generated: ${new Date().toLocaleString()}`;
       <Button
         onClick={handleIncreaseIntelligence}
         disabled={isProcessing || !originalText.trim()}
-        className={`flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white ${className}`}
-        size="sm"
+        className={className || "flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"}
+        size={className ? undefined : "sm"}
         data-testid="button-increase-intelligence"
       >
         {isProcessing ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Expanding...
+            <Loader2 className={className ? "h-6 w-6 mb-2 animate-spin" : "h-4 w-4 animate-spin"} />
+            <span className={className ? "text-sm" : ""}>Expanding...</span>
           </>
         ) : (
           <>
-            <Zap className="h-4 w-4" />
-            Increase Intelligence
+            <Zap className={className ? "h-6 w-6 mb-2" : "h-4 w-4"} />
+            <span className={className ? "text-sm" : ""}>Increase Intelligence</span>
           </>
         )}
       </Button>
