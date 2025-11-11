@@ -47,58 +47,81 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   console.log(`Original score: ${originalScore}/100`);
   
   // Step 2: Create rewrite instructions
-  const defaultInstructions = `REWRITE THIS TEXT TO MAKE IT GENUINELY SMARTER WITHOUT INFLATING WORD COUNT.
+  const defaultInstructions = `YOUR JOB: IDENTIFY WHAT'S MISSING AND ADD IT. DO NOT REPHRASE EXISTING TEXT.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ CRITICAL: IF YOU ADD BLOAT OR ACADEMIC PADDING, YOU HAVE FAILED ⚠️
+⚠️ CRITICAL: "REWRITE" MEANS ADD MISSING SUBSTANCE, NOT REPHRASE ⚠️
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EXAMPLES OF FAILURES (DO NOT DO THIS):
+WHAT "MAXIMIZE INTELLIGENCE" ACTUALLY MEANS:
 
-❌ ORIGINAL: "Most people operate on the assumption that"
-❌ BLOATED REWRITE: "The prevailing assumption among both laypeople and psychologists posits that"
-→ This is 40% longer, sounds pretentious, adds ZERO insight. TOTAL FAILURE.
+1. Find arguments the text SHOULD make but DOESN'T
+2. Add counterarguments it SHOULD address but DOESN'T
+3. Provide evidence it SHOULD cite but DOESN'T
+4. Explore implications it SHOULD develop but DOESN'T
+5. Make connections to other domains it SHOULD make but DOESN'T
 
-❌ ORIGINAL: "various self-directed drives"
-❌ BLOATED REWRITE: "individuals possess self-directed drives that, within group contexts, are redirected"
-→ Adding "possess" and "within group contexts" is just padding. FAILURE.
-
-❌ ORIGINAL: "this position is understandable"
-❌ BLOATED REWRITE: "This perspective holds descriptive validity"
-→ Swapping natural language for jargon without adding precision. FAILURE.
+THIS IS SUBSTANTIVE IMPROVEMENT, NOT STYLISTIC REPHRASING.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-HOW TO ACTUALLY MAKE TEXT SMARTER (NOT LONGER):
+EXAMPLES OF SUBSTANTIVE IMPROVEMENTS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✓ Replace vague terms with precise ones:
-  "various drives" → "survival drives and status drives" (same length, more specific)
+✓ ORIGINAL: "Collectives exhibit more intelligence than individuals"
+✓ IMPROVED: "Collectives exhibit more intelligence than individuals. Consider: individual neurons are simple, but brains solve differential equations. Individual ants follow pheromones, but colonies optimize foraging routes. The intelligence emerges from the structure, not the components."
+→ Added concrete examples that strengthen the argument
 
-✓ Add a conceptual distinction the author missed:
-  "group psychology" → "emergent collective behavior vs aggregated individual behavior" (new distinction)
+✓ ORIGINAL: "This position cannot be reconciled with conformism"
+✓ IMPROVED: "This position cannot be reconciled with conformism. If individuals were truly autonomous, we'd expect 30-40% dissent on any controversial position (matching base rates of contrarianism). Instead we see 95%+ conformity even on demonstrably false beliefs. The math doesn't work."
+→ Added quantitative reasoning that makes the argument stronger
 
-✓ Make a bolder, riskier claim if you can defend it:
-  "it is hard to believe" → "this is impossible" (stronger if you can justify it)
-
-✓ Expose hidden assumptions:
-  Add: "This assumes individuals can exist independently, which may be false"
-
-✓ Cut redundancy:
-  "try to survive, flourish and reproduce" → "try to survive and reproduce" (flourish is implied)
+✓ ORIGINAL: [Essay on group psychology]
+✓ IMPROVED: [Same essay] + "The obvious counterargument: what about rebels and innovators? But notice they're always reacting AGAINST a collective position. Einstein rebelled against Newtonian physics - a collective framework. He didn't generate physics ex nihilo. Even rebellion is group-structured."
+→ Added missing counterargument and rebuttal
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-MANDATORY CONSTRAINTS:
+WHAT TO ACTUALLY DO:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. NEVER replace simple words with complex synonyms just to sound smart
-2. NEVER add "wherein", "whereby", "thereof" unless it actually clarifies something
-3. NEVER change "people" to "individuals" or "laypeople" unless it matters
-4. NEVER add words like "posit", "manifest", "embody" when simple verbs work
-5. KEEP the author's natural voice and rhythm
-6. ADD insight, NOT word count
-7. If you can't make it genuinely smarter, change NOTHING
+STEP 1: Analyze what's MISSING
+- What counterargument should be addressed?
+- What evidence would strengthen this?
+- What implication could be explored?
+- What connection to another domain would help?
+- What assumption is hidden and should be made explicit?
 
-OUTPUT TARGET: Same length or SHORTER, with MORE actual conceptual content.`;
+STEP 2: ADD the missing content
+- Insert new paragraphs, new arguments, new evidence
+- Keep the author's voice and style
+- Make sure additions genuinely strengthen the argument
+
+STEP 3: Keep existing text UNCHANGED unless it's actually wrong
+- Don't rephrase for style
+- Don't swap words for synonyms
+- Don't add academic jargon
+- Only change existing text if it's factually incorrect or logically flawed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORBIDDEN ACTIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Changing "Most people" to "The prevailing assumption" (just rephrasing)
+❌ Changing "operate on the assumption" to "posit that" (just rephrasing)
+❌ Adding "wherein" or "whereby" or "thereof" (just padding)
+❌ Making sentences longer without adding substance
+❌ Changing casual voice to academic voice
+❌ Rephrasing clear statements in fancier words
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OUTPUT FORMAT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Return the COMPLETE text with:
+- Original text preserved (same words, same style)  
+- New substantive additions inserted where they strengthen the argument
+- NO stylistic changes unless they fix actual errors
+
+If the text is already near-perfect, ADD 1-3 paragraphs of missing content rather than rephrasing what's there.`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
