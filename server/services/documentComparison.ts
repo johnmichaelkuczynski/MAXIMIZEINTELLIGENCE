@@ -79,6 +79,15 @@ FINAL VERDICT:
 DOCUMENT A:
 `;
 
+function mapZhiToProvider(zhiName: string): 'openai' | 'anthropic' | 'deepseek' | 'perplexity' {
+  const mapping: Record<string, 'openai' | 'anthropic' | 'deepseek' | 'perplexity'> = {
+    'zhi1': 'openai',
+    'zhi2': 'anthropic', 
+    'zhi3': 'deepseek',
+  };
+  return mapping[zhiName] || (zhiName as 'openai' | 'anthropic' | 'deepseek' | 'perplexity');
+}
+
 export async function compareDocuments(
   documentA: string,
   documentB: string,
@@ -87,9 +96,12 @@ export async function compareDocuments(
   // First, get absolute scores for each document individually
   const { performCaseAssessment } = await import('./caseAssessment');
   
+  // Map zhi1/zhi2/zhi3 to actual provider names
+  const actualProvider = mapZhiToProvider(provider);
+  
   console.log('Getting absolute scores for both documents...');
-  const scoreA = await performCaseAssessment(documentA, provider);
-  const scoreB = await performCaseAssessment(documentB, provider);
+  const scoreA = await performCaseAssessment(documentA, actualProvider);
+  const scoreB = await performCaseAssessment(documentB, actualProvider);
   
   console.log(`Document A absolute score: ${scoreA.overallCaseScore}`);
   console.log(`Document B absolute score: ${scoreB.overallCaseScore}`);
@@ -102,7 +114,7 @@ export async function compareDocuments(
   // Call the LLM directly without using the analysis functions
   let response: string;
   
-  if (provider === 'openai') {
+  if (actualProvider === 'openai') {
     const OpenAI = (await import('openai')).default;
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     
@@ -115,12 +127,12 @@ export async function compareDocuments(
     });
     
     response = completion.choices[0].message.content || "No response available";
-  } else if (provider === 'anthropic') {
+  } else if (actualProvider === 'anthropic') {
     const Anthropic = (await import('@anthropic-ai/sdk')).default;
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     
     const completion = await anthropic.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-3-5-sonnet-latest",
       max_tokens: 4000,
       messages: [
         { role: "user", content: prompt }
@@ -128,7 +140,7 @@ export async function compareDocuments(
     });
     
     response = completion.content[0].type === 'text' ? completion.content[0].text : "No response available";
-  } else if (provider === 'deepseek') {
+  } else if (actualProvider === 'deepseek') {
     const fetch = (await import('node-fetch')).default;
     
     const apiResponse = await fetch('https://api.deepseek.com/chat/completions', {
@@ -149,7 +161,7 @@ export async function compareDocuments(
     
     const data = await apiResponse.json() as any;
     response = data.choices?.[0]?.message?.content || "No response available";
-  } else if (provider === 'perplexity') {
+  } else if (actualProvider === 'perplexity') {
     const fetch = (await import('node-fetch')).default;
     
     const apiResponse = await fetch('https://api.perplexity.ai/chat/completions', {
@@ -171,7 +183,7 @@ export async function compareDocuments(
     const data = await apiResponse.json() as any;
     response = data.choices?.[0]?.message?.content || "No response available";
   } else {
-    throw new Error(`Unsupported provider: ${provider}`);
+    throw new Error(`Unsupported provider: ${actualProvider}`);
   }
   
   console.log('Raw comparison response:', response.substring(0, 500) + '...');
