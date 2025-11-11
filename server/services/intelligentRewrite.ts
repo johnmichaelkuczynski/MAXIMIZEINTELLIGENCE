@@ -47,32 +47,58 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   console.log(`Original score: ${originalScore}/100`);
   
   // Step 2: Create rewrite instructions
-  const defaultInstructions = `Rewrite this to maximize genuine intelligence and insight. Score 98-100/100 means:
+  const defaultInstructions = `REWRITE THIS TEXT TO MAKE IT GENUINELY SMARTER WITHOUT INFLATING WORD COUNT.
 
-CRITICAL RULES:
-1. SEMANTIC COMPRESSION: Use FEWER words, not more. Cut every unnecessary word. Never inflate.
-2. PRESERVE VOICE: Keep the author's natural style, tone, and cadence. Don't make it sound academic unless it already does.
-3. ADD REAL INSIGHT: Introduce genuinely new conceptual distinctions or non-obvious connections. No generic elaboration.
-4. INFERENTIAL CLARITY: Make logical connections explicit ONLY when they're actually unclear. Don't add obvious connectors.
-5. BOLD CLAIMS: Make stronger, riskier claims when you can defend them. Avoid hedging.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ CRITICAL: IF YOU ADD BLOAT OR ACADEMIC PADDING, YOU HAVE FAILED ⚠️
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WHAT MAKES TEXT SMARTER (DO THIS):
-- Introduce a conceptual distinction the original missed (e.g., "group psychology" → distinguish "emergent collective behavior" vs "aggregated individual behavior")
-- Replace vague terms with precise ones ("various drives" → specify which drives)
-- Add a counterintuitive connection or implication the author didn't explore
-- Tighten loose reasoning by making hidden assumptions explicit
-- Create recursive structure where later points strengthen earlier ones
+EXAMPLES OF FAILURES (DO NOT DO THIS):
 
-WHAT MAKES TEXT WORSE (NEVER DO THIS):
-- ❌ Adding academic padding: "operate on the assumption" → "posit that" (same meaning, sounds pretentious)
-- ❌ Inflating word count: "Most people" → "The prevailing assumption among laypeople" (just bloat)
-- ❌ Generic elaboration: adding "wherein" clauses that say obvious things
-- ❌ Changing natural voice to academic voice without adding insight
-- ❌ Adding explicit connectors to already-clear logic ("therefore", "thus", "moreover" spam)
+❌ ORIGINAL: "Most people operate on the assumption that"
+❌ BLOATED REWRITE: "The prevailing assumption among both laypeople and psychologists posits that"
+→ This is 40% longer, sounds pretentious, adds ZERO insight. TOTAL FAILURE.
 
-PRESERVE: Natural voice, conciseness, author's style
-ENHANCE: Conceptual precision, non-obvious insights, logical rigor
-OUTPUT: Same or FEWER words than original, but packed with more actual insight`;
+❌ ORIGINAL: "various self-directed drives"
+❌ BLOATED REWRITE: "individuals possess self-directed drives that, within group contexts, are redirected"
+→ Adding "possess" and "within group contexts" is just padding. FAILURE.
+
+❌ ORIGINAL: "this position is understandable"
+❌ BLOATED REWRITE: "This perspective holds descriptive validity"
+→ Swapping natural language for jargon without adding precision. FAILURE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HOW TO ACTUALLY MAKE TEXT SMARTER (NOT LONGER):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Replace vague terms with precise ones:
+  "various drives" → "survival drives and status drives" (same length, more specific)
+
+✓ Add a conceptual distinction the author missed:
+  "group psychology" → "emergent collective behavior vs aggregated individual behavior" (new distinction)
+
+✓ Make a bolder, riskier claim if you can defend it:
+  "it is hard to believe" → "this is impossible" (stronger if you can justify it)
+
+✓ Expose hidden assumptions:
+  Add: "This assumes individuals can exist independently, which may be false"
+
+✓ Cut redundancy:
+  "try to survive, flourish and reproduce" → "try to survive and reproduce" (flourish is implied)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MANDATORY CONSTRAINTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. NEVER replace simple words with complex synonyms just to sound smart
+2. NEVER add "wherein", "whereby", "thereof" unless it actually clarifies something
+3. NEVER change "people" to "individuals" or "laypeople" unless it matters
+4. NEVER add words like "posit", "manifest", "embody" when simple verbs work
+5. KEEP the author's natural voice and rhythm
+6. ADD insight, NOT word count
+7. If you can't make it genuinely smarter, change NOTHING
+
+OUTPUT TARGET: Same length or SHORTER, with MORE actual conceptual content.`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
