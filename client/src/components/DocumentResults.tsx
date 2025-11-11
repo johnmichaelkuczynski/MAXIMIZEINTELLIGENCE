@@ -7,6 +7,7 @@ import ShareViaEmailModal from "./ShareViaEmailModal";
 import AIDetectionModal from "./AIDetectionModal";
 import ReportDownloadButton from "./ReportDownloadButton";
 import PhilosophicalIntelligenceReport from "./PhilosophicalIntelligenceReport";
+import IncreaseIntelligenceButton from "./IncreaseIntelligenceButton";
 import { checkForAI } from "@/lib/analysis";
 import { useToast } from "@/hooks/use-toast";
 
@@ -105,6 +106,12 @@ const DocumentResults: React.FC<DocumentResultsProps> = ({
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          {originalDocument?.content && (
+            <IncreaseIntelligenceButton
+              originalText={originalDocument.content}
+              provider="zhi2"
+            />
+          )}
           <Button
             size="sm"
             variant="outline"

@@ -4,7 +4,19 @@
 This platform analyzes written text to assess the intelligence and cognitive fingerprint of authors using multi-model AI evaluation. It provides document analysis, AI detection, translation, comprehensive cognitive profiling, and intelligent text rewriting capabilities. The project's vision is to offer deep insights into cognitive abilities and thought processes from written content, with advanced features for maximizing intelligence scores through iterative rewriting.
 
 ## Recent Changes
-- **November 2025**: **INTELLIGENT REWRITE FUNCTION REMOVED** - Complete removal of intelligence maximization feature
+- **November 2025**: **INCREASE INTELLIGENCE FUNCTION IMPLEMENTED** - New function that expands text with empirical grounding and explicit reasoning
+  - ✅ **Created increaseIntelligence.ts service** - Backend implementation with 4-6x expansion logic
+  - ✅ **Created IncreaseIntelligenceButton component** - UI button with results modal showing expansion statistics
+  - ✅ **Added API endpoint** - /api/increase-intelligence route handles text expansion requests
+  - ✅ **Integrated in DocumentResults.tsx** - Button appears after analysis results for immediate use
+  - **Function specifications**: 
+    - EXPANDS text 4-6x (250 words → 1,500-3,000 words)
+    - ADDS empirical grounding (studies, data, experiments with specific percentages)
+    - MAKES IMPLICIT EXPLICIT (numbered premises, detailed logical steps)
+    - ADDS CITATIONS (real research from cognitive science, neuroscience, psychology)
+    - PRESERVES all original arguments (never simplifies or condenses)
+  - Files created: server/services/increaseIntelligence.ts, client/src/components/IncreaseIntelligenceButton.tsx
+- **November 2025**: **INTELLIGENT REWRITE FUNCTION REMOVED** - Complete removal of old intelligence maximization feature
   - ❌ **Deleted intelligentRewrite.ts service** - Backend implementation completely removed
   - ❌ **Deleted IntelligentRewriteButton component** - UI button removed from interface
   - ❌ **Removed API endpoint** - /api/intelligent-rewrite route deleted from server/routes.ts

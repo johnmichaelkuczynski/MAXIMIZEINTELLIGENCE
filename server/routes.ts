@@ -561,6 +561,40 @@ export async function registerRoutes(app: Express): Promise<Express> {
     }
   });
 
+  // INCREASE INTELLIGENCE - Expand text with empirical grounding and explicit reasoning
+  app.post("/api/increase-intelligence", async (req: Request, res: Response) => {
+    try {
+      const { text, provider = 'zhi2' } = req.body;
+
+      if (!text || typeof text !== 'string') {
+        return res.status(400).json({ 
+          error: "Text is required and must be a string" 
+        });
+      }
+
+      console.log(`Starting intelligence increase with ${provider}...`);
+      console.log(`Input text length: ${text.length} characters`);
+      
+      const { performIncreaseIntelligence } = await import('./services/increaseIntelligence');
+      const result = await performIncreaseIntelligence({
+        text,
+        provider
+      });
+      
+      res.json({
+        success: true,
+        result
+      });
+      
+    } catch (error: any) {
+      console.error("Increase intelligence error:", error);
+      res.status(500).json({ 
+        error: true, 
+        message: error.message || "Intelligence increase failed" 
+      });
+    }
+  });
+
   // COMPREHENSIVE 4-PHASE EVALUATION using exact protocol with evaluation type support
   app.post("/api/cognitive-evaluate", async (req: Request, res: Response) => {
     try {
