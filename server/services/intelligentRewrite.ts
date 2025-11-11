@@ -47,28 +47,32 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   console.log(`Original score: ${originalScore}/100`);
   
   // Step 2: Create rewrite instructions
-  const defaultInstructions = `You are rewriting text to score 98-100/100 on a sophisticated 4-phase intelligence evaluation. This evaluation specifically looks for:
+  const defaultInstructions = `Rewrite this to maximize genuine intelligence and insight. Score 98-100/100 means:
 
-CRITICAL SUCCESS FACTORS (what scores 95-100):
-1. NOVEL ABSTRACTION: Introduce genuinely new conceptual distinctions or frameworks that weren't obvious before
-2. INFERENTIAL CONTROL: Make every logical step crystal clear with explicit reasoning chains 
-3. SEMANTIC COMPRESSION: Pack maximum meaning into minimal words - every sentence must carry heavy conceptual load
-4. RECURSIVE STRUCTURE: Create arguments that loop back and strengthen themselves (A supports B supports C supports A*)
-5. OPERATIONAL PRECISION: Define terms with surgical precision - no vague concepts allowed
-6. HIERARCHICAL ORGANIZATION: Clear logical progression from foundation to implications
-7. COGNITIVE RISK: Make bold, non-obvious claims that require sophisticated reasoning to defend
+CRITICAL RULES:
+1. SEMANTIC COMPRESSION: Use FEWER words, not more. Cut every unnecessary word. Never inflate.
+2. PRESERVE VOICE: Keep the author's natural style, tone, and cadence. Don't make it sound academic unless it already does.
+3. ADD REAL INSIGHT: Introduce genuinely new conceptual distinctions or non-obvious connections. No generic elaboration.
+4. INFERENTIAL CLARITY: Make logical connections explicit ONLY when they're actually unclear. Don't add obvious connectors.
+5. BOLD CLAIMS: Make stronger, riskier claims when you can defend them. Avoid hedging.
 
-SPECIFIC REWRITE TACTICS:
-- Add explicit "because" and "therefore" chains showing logical connections
-- Introduce precise technical distinctions (like "presentations vs representations")
-- Create nested logical structures where each point builds on and reinforces others
-- Use precise philosophical/technical language where it adds conceptual clarity
-- Make implicit assumptions explicit and defend them
-- Show how conclusions loop back to strengthen premises
-- Add brief explanations of why obvious alternatives fail
+WHAT MAKES TEXT SMARTER (DO THIS):
+- Introduce a conceptual distinction the original missed (e.g., "group psychology" → distinguish "emergent collective behavior" vs "aggregated individual behavior")
+- Replace vague terms with precise ones ("various drives" → specify which drives)
+- Add a counterintuitive connection or implication the author didn't explore
+- Tighten loose reasoning by making hidden assumptions explicit
+- Create recursive structure where later points strengthen earlier ones
 
-PRESERVE: Core arguments, conclusions, overall thesis
-ENHANCE: Logical rigor, conceptual precision, inferential transparency`;
+WHAT MAKES TEXT WORSE (NEVER DO THIS):
+- ❌ Adding academic padding: "operate on the assumption" → "posit that" (same meaning, sounds pretentious)
+- ❌ Inflating word count: "Most people" → "The prevailing assumption among laypeople" (just bloat)
+- ❌ Generic elaboration: adding "wherein" clauses that say obvious things
+- ❌ Changing natural voice to academic voice without adding insight
+- ❌ Adding explicit connectors to already-clear logic ("therefore", "thus", "moreover" spam)
+
+PRESERVE: Natural voice, conciseness, author's style
+ENHANCE: Conceptual precision, non-obvious insights, logical rigor
+OUTPUT: Same or FEWER words than original, but packed with more actual insight`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
