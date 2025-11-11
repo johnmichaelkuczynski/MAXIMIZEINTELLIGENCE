@@ -46,126 +46,69 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   
   console.log(`Original score: ${originalScore}/100`);
   
-  // Step 2: Create rewrite instructions
-  const defaultInstructions = `YOUR JOB: PRESERVE THE ORIGINAL TEXT. ADD EMPIRICAL EVIDENCE AND CONCRETE EXAMPLES.
+  // Step 2: Create rewrite instructions  
+  const defaultInstructions = `INSTRUCTIONS: PRESERVE ORIGINAL TEXT VERBATIM. ADD EMPIRICAL EVIDENCE, CONCRETE EXAMPLES, AND EXPLICIT DEVELOPMENT.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ KEEP ORIGINAL TEXT INTACT. ADD EVIDENCE, EXAMPLES, DATA. ⚠️
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NEVER EVER IMPROVE BY "REWORDING." ALL ADDITIONS MUST BE SUBSTANTIVE, NOT PHRASEOLOGICAL.
 
-WHAT TO ADD (in order of priority):
+YOUR TASK:
+1. Keep every original sentence EXACTLY as written (word-for-word)
+2. INSERT new content BETWEEN original sentences that adds:
+   - Empirical studies with quantitative data
+   - Concrete biological/organizational examples
+   - Explicit development of implicit points
+   - Mechanisms and explanations
 
-1. EMPIRICAL STUDIES: Add research citations for unsupported claims
-   - "incredibly high degree of conformism" → Add Asch experiments (75% conformed, 32% of responses)
-   - "wisdom of crowds" → Add actual research on aggregated judgments
+WHAT TO ADD:
 
-2. CONCRETE EXAMPLES: Add specific cases for abstract arguments
-   - "collectives exhibit intelligence" → Add apoptosis, cellular differentiation examples
-   - "scientific progress" → Add historical analysis of specific discoveries
+FOR EVERY UNSUPPORTED CLAIM:
+- Add specific research: "Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority."
+- Add concrete examples: "Consider apoptosis—programmed cell death. From an individual-cell perspective, apoptosis appears maladaptive: the cell actively dismantles itself through a genetically-encoded suicide program."
+- Add quantitative data: Replace "high degree" with "75% of participants"
+- Add mechanisms: Explain HOW and WHY, not just THAT
 
-3. QUANTITATIVE DATA: Add numbers for qualitative claims
-   - "high degree" → "75% of participants"
-   - "most" → Specify actual percentages
+FOR EVERY ABSTRACT ARGUMENT:
+- Add concrete cases from biology, psychology, history
+- Add specific studies and researchers by name
+- Add mathematical models or empirical demonstrations
 
-4. IMPLICIT → EXPLICIT: Develop underdeveloped implications
-   - "geniuses as limiting cases" → Spell out three interpretations explicitly
-   - "collective is primary" → Explain the ontological claim
+FOR EVERY IMPLICIT POINT:
+- Make it explicit by spelling out what's being assumed
+- Add 1-3 paragraphs developing the implication
+- Example: "geniuses as limiting cases" → Spell out three interpretations: (1) geniuses as collectives of one, (2) geniuses as rogue actors, (3) geniuses as specialized collective members
 
-5. BIOLOGICAL/EMPIRICAL GROUNDING: Add mechanisms, not just assertions
-   - "cells sacrifice for organism" → Explain apoptosis machinery
-   - "organizations exhibit rationality" → Cite organizational routine research
+MANDATORY FORMAT:
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EXAMPLE OF CORRECT IMPROVEMENT:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Original sentence [PRESERVED VERBATIM]. New empirical content adding study/data/example. More development making implicit points explicit. Original next sentence [PRESERVED VERBATIM]. New concrete biological example. Mechanism explanation.
+
+EXAMPLE:
 
 ORIGINAL: "This methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people"
 
-CORRECT IMPROVEMENT: "However, this methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people—even after intellectual shortcomings on their part are taken into account—to other people's opinions. Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority. Crucially, these effects persisted even when the correct answer was unambiguous and conformity imposed no material benefit."
+IMPROVED: "However, this methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people—even after intellectual shortcomings on their part are taken into account—to other people's opinions. Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority. Crucially, these effects persisted even when the perceptual task was unambiguous and participants were demonstrably capable of accurate independent judgment."
 
-WHAT WAS ADDED:
-✓ Asch experiments (specific study)
-✓ 75% conformed at least once (quantitative data)
-✓ 32% of responses (more precise metric)
-✓ "effects persisted even when..." (empirical detail)
+WHAT WAS DONE:
+✓ Original text preserved: "This methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people"
+✓ Added Asch experiments (specific study)
+✓ Added 75% and 32% (quantitative data)
+✓ Added "effects persisted even when..." (empirical detail)
+✗ Did NOT change "cannot be reconciled" to "is incompatible with"
+✗ Did NOT change "people" to "individuals"
+✗ Did NOT make it sound more academic
 
-WHAT WAS PRESERVED:
-✓ "This methodological stance cannot be reconciled" (exact wording)
-✓ "incredibly high degree of conformism" (exact wording)
-✓ Author's natural voice and rhythm
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-ORIGINAL: "A cell is an individual organism. But how well can you understand a cell if you try to understand on its own terms?"
-
-CORRECT IMPROVEMENT: "A cell is an individual organism. But how well can you understand a cell if you try to understand it on its own terms? Pretty well but not maximally well. If you tried to understand its behavior in terms of a drive on its part to live or flourish or reproduce, you would get far. Cellular biology successfully explains many phenomena—metabolism, homeostasis, mitosis—by treating cells as autonomous units with their own survival machinery. But there would still be some unanswered, and unanswerable, questions.
-
-Consider apoptosis—programmed cell death. From an individual-cell perspective, apoptosis appears maladaptive: the cell actively dismantles itself through a genetically-encoded suicide program. Why would an organism whose fundamental drive is survival and reproduction possess elaborate mechanisms for self-destruction?"
-
-WHAT WAS ADDED:
-✓ Apoptosis as concrete example
-✓ Biological mechanism explanation
-✓ The puzzle it creates for individualist framework
-
-WHAT WAS PRESERVED:
-✓ Original question structure
-✓ Original phrasing ("Pretty well but not maximally well")
-✓ Conversational tone
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PROCEDURE:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-STEP 1: Identify every unsupported claim
-- "incredibly high degree of conformism" → Needs Asch experiments
-- "wisdom of crowds" → Needs actual research citation
-- "collectives exhibit more intelligence" → Needs concrete examples (apoptosis, neurons/brains)
-
-STEP 2: For each unsupported claim, add:
-- Specific study name (Solomon Asch, James Surowiecki, etc.)
-- Quantitative data (75%, 32%, etc.)
-- Concrete biological/organizational example
-- Mechanism explanation (how/why it works)
-
-STEP 3: Preserve original text EXACTLY
-- Keep "Most people, including most psychologists" (don't change to "The prevailing assumption")
-- Keep "it is hard to believe" (don't change to "this is impossible" unless you can prove it)
-- Keep author's casual, direct voice
-- Only add content BETWEEN original sentences, never replace them
-
-STEP 4: Develop implicit points explicitly
-- "geniuses as limiting cases" → Spell out all three interpretations
-- "collective is primary" → Explain what this means ontologically
-- Add 2-3 paragraphs developing underdeveloped implications
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FORBIDDEN ACTIONS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-❌ Changing "Most people" to "The prevailing assumption" (just rephrasing)
-❌ Changing "operate on the assumption" to "posit that" (just rephrasing)
-❌ Adding "wherein" or "whereby" or "thereof" (just padding)
-❌ Making sentences longer without adding substance
+FORBIDDEN:
+❌ Changing "Most people" → "The prevailing assumption" (rephrasing)
+❌ Changing "operate on the assumption" → "posit that" (rephrasing)  
+❌ Changing "it is hard to believe" → "it is impossible" (unless you prove it)
+❌ Adding "wherein", "whereby", "thereof" without adding meaning
 ❌ Changing casual voice to academic voice
-❌ Rephrasing clear statements in fancier words
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OUTPUT REQUIREMENTS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-MANDATORY:
-1. Original sentences must appear VERBATIM (exact same words)
-2. Add empirical studies, quantitative data, concrete examples BETWEEN original sentences
-3. Expand underdeveloped implications with 1-3 new paragraphs
-4. Keep author's natural, conversational voice
-5. Never rephrase, never swap synonyms, never make it sound more academic
-
-RESULT SHOULD BE:
-- Original text 100% preserved
-- 2-3x longer due to evidence and examples
-- Every claim now backed by specific study or concrete case
-- Implicit arguments made fully explicit
-- Same voice, same style, more substance`;
+RESULT MUST BE:
+- Original text appears word-for-word
+- 2-3x longer from substantive additions
+- Every claim backed by specific study or concrete case
+- Implicit points explicitly developed
+- Same voice, same rhythm, more empirical grounding`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
