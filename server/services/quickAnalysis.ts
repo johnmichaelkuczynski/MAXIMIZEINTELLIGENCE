@@ -69,14 +69,16 @@ async function callLLMProvider(provider: string, messages: Array<{role: string, 
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-3-5-sonnet-latest',
         max_tokens: 4000,
         messages: messages
       }),
     });
     
     if (!response.ok) {
-      throw new Error(`Anthropic API error: ${response.status}`);
+      const errorBody = await response.text();
+      console.error('Anthropic API error response:', errorBody);
+      throw new Error(`Anthropic API error: ${response.status} - ${errorBody}`);
     }
     
     const data = await response.json();
