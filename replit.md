@@ -4,6 +4,14 @@
 This platform analyzes written text to assess the intelligence and cognitive fingerprint of authors using multi-model AI evaluation. It provides document analysis, AI detection, translation, comprehensive cognitive profiling, and intelligent text rewriting capabilities. The project's vision is to offer deep insights into cognitive abilities and thought processes from written content, with advanced features for maximizing intelligence scores through iterative rewriting.
 
 ## Recent Changes
+- **January 2025**: **MANDATORY QUOTE ENFORCEMENT COMPLETED** - Complete overhaul of all analysis prompts to force evidence-based evaluation
+  - ✅ **All prompts now MANDATE direct quotes**: Every analysis must include 2-4 direct quotes from text with detailed analysis (no generic statements allowed)
+  - ✅ **Explicit percentile scoring system**: Added percentile interpretation tables to all prompts (100=top 0.001%, 95=top 0.1%, 85=top 15%, 50=median)
+  - ✅ **Anti-moderation warnings**: Added "DO NOT MODERATE SCORES" instructions to prevent diplomatic score inflation
+  - ✅ **Forbidden statement examples**: Added explicit ❌/✓ examples showing generic statements that are forbidden vs. proper evidence-based analysis
+  - ✅ **Consistent across all modes**: Quick mode and comprehensive mode now have identical strict requirements (only length differs)
+  - ✅ **EVIDENCE → ANALYSIS → JUDGMENT format**: All prompts enforce structured response format with mandatory quote sections
+  - Files updated: server/services/directLLM.ts (Phase 1 & 2), server/services/fourPhaseProtocol.ts (all Phase 1 & 2 variants)
 - **January 2025**: **CRITICAL FIXES COMPLETED** - All core functions now fully operational
   - ✅ **Fiction Assessment fully restored**: Fixed critical "require is not defined" error, API now returns structured JSON scores
   - ✅ **UI scrolling issues completely resolved**: Fixed preview breakage, restored proper dialog scrolling functionality
