@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Share2 } from "lucide-react";
 import ShareViaEmailModal from "./ShareViaEmailModal";
 import ReportDownloadButton from "./ReportDownloadButton";
-import IntelligentRewriteButton from "./IntelligentRewriteButton";
 
 interface ComparativeResultsProps {
   analysisA: DocumentAnalysis;
@@ -43,20 +42,6 @@ const ComparativeResults: React.FC<ComparativeResultsProps> = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Comparative Analysis</h2>
         <div className="flex flex-wrap gap-2">
-          {documentAText && (
-            <IntelligentRewriteButton
-              originalText={documentAText}
-              originalAnalysis={analysisA}
-              className="text-xs"
-            />
-          )}
-          {documentBText && (
-            <IntelligentRewriteButton
-              originalText={documentBText}
-              originalAnalysis={analysisB}
-              className="text-xs"
-            />
-          )}
           <Button 
             size="sm" 
             variant="outline" 

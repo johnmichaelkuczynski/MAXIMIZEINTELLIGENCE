@@ -9,7 +9,6 @@ import ReportDownloadButton from "./ReportDownloadButton";
 import PhilosophicalIntelligenceReport from "./PhilosophicalIntelligenceReport";
 import { checkForAI } from "@/lib/analysis";
 import { useToast } from "@/hooks/use-toast";
-import IntelligentRewriteButton from "./IntelligentRewriteButton";
 
 interface DocumentResultsProps {
   id: "A" | "B";
@@ -106,12 +105,6 @@ const DocumentResults: React.FC<DocumentResultsProps> = ({
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {originalDocument?.content && (
-            <IntelligentRewriteButton
-              originalText={originalDocument.content}
-              originalAnalysis={analysis}
-            />
-          )}
           <Button
             size="sm"
             variant="outline"

@@ -561,42 +561,6 @@ export async function registerRoutes(app: Express): Promise<Express> {
     }
   });
 
-  // INTELLIGENT REWRITE - Maximize intelligence scores on protocol questions
-  app.post("/api/intelligent-rewrite", async (req: Request, res: Response) => {
-    try {
-      const { originalText, customInstructions, provider = 'zhi1' } = req.body;
-
-      if (!originalText || typeof originalText !== 'string') {
-        return res.status(400).json({ 
-          error: "Original text is required and must be a string" 
-        });
-      }
-
-      console.log(`Starting intelligent rewrite with ${provider}...`);
-      console.log(`Original text length: ${originalText.length} characters`);
-      console.log(`Custom instructions: ${customInstructions || 'None'}`);
-      
-      const { performIntelligentRewrite } = await import('./services/intelligentRewrite');
-      const result = await performIntelligentRewrite({
-        text: originalText,
-        customInstructions,
-        provider
-      });
-      
-      res.json({
-        success: true,
-        result: result
-      });
-      
-    } catch (error: any) {
-      console.error("Intelligent rewrite error:", error);
-      res.status(500).json({ 
-        error: true, 
-        message: error.message || "Intelligent rewrite failed" 
-      });
-    }
-  });
-
   // COMPREHENSIVE 4-PHASE EVALUATION using exact protocol with evaluation type support
   app.post("/api/cognitive-evaluate", async (req: Request, res: Response) => {
     try {
