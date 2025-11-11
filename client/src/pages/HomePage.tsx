@@ -715,10 +715,10 @@ DOES THE AUTHOR USE OTHER AUTHORS TO DEVELOP HIS IDEAS OR TO CLOAK HIS OWN LACK 
       // CREATE CASE ASSESSMENT ONLY RESULT - NOT INTELLIGENCE ASSESSMENT  
       setAnalysisA({
         id: Date.now(),
-        formattedReport: "", // Empty so it doesn't show in intelligence section
+        formattedReport: fullResponse.trim(), // ✅ FIX: Include the full streamed response
         overallScore: undefined, // No intelligence score
         provider: provider,
-        analysis: "",
+        analysis: fullResponse.trim(), // ✅ FIX: Also populate analysis field
         summary: "",
         caseAssessment: caseAssessmentData,
         analysisType: "case_assessment", // Flag to identify this as case assessment

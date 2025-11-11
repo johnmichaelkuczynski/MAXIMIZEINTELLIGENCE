@@ -16,6 +16,11 @@ interface IntelligentRewriteResult {
   provider: string;
   instructions: string;
   rewriteReport: string;
+  newAnalysis: {
+    intelligence_score: number;
+    analysis: string;
+    formattedReport: string;
+  };
 }
 
 // Map ZHI names to actual provider names
@@ -109,7 +114,7 @@ REWRITTEN TEXT:`;
       const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
       
       const completion = await anthropic.messages.create({
-        model: "claude-3-5-sonnet-20241022",
+        model: "claude-sonnet-4-5-20250929",
         max_tokens: 4000,
         messages: [{ role: "user", content: rewritePrompt }],
         temperature: 0.1
@@ -201,6 +206,11 @@ the text's intelligence evaluation score through ${improvementType === 'improvem
     rewrittenScore,
     provider,
     instructions: customInstructions || 'Default intelligence optimization',
-    rewriteReport
+    rewriteReport,
+    newAnalysis: {
+      intelligence_score: rewrittenScore,
+      analysis: rewrittenEvaluation.formattedReport || rewrittenEvaluation.analysis || rewriteReport,
+      formattedReport: rewrittenEvaluation.formattedReport || rewrittenEvaluation.analysis || rewriteReport
+    }
   };
 }

@@ -128,7 +128,7 @@ async function makeFictionComparisonRequest(prompt: string, provider: string): P
       const Anthropic = (await import('@anthropic-ai/sdk')).default;
       const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
       const anthropicResponse = await anthropic.messages.create({
-        model: "claude-3-5-sonnet-20241022",
+        model: "claude-sonnet-4-5-20250929",
         max_tokens: 4000,
         messages: [{ role: "user", content: prompt }],
         temperature: 0.2

@@ -121,7 +121,7 @@ async function callLLMProvider(provider: LLMProvider, messages: Array<{role: str
       const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
       
       const completion = await anthropic.messages.create({
-        model: "claude-3-5-sonnet-20241022",
+        model: "claude-sonnet-4-5-20250929",
         max_tokens: 4000,
         messages: messages as any,
         temperature: 0.1

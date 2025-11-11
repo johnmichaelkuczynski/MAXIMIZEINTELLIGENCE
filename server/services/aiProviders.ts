@@ -4,7 +4,7 @@ import Anthropic from '@anthropic-ai/sdk';
 /*
 <important_code_snippet_instructions>
 The newest OpenAI model is "gpt-4o" which was released May 13, 2024. Do not change this unless explicitly requested by the user.
-The newest Anthropic model is "claude-sonnet-4-20250514", not "claude-3-7-sonnet-20250219", "claude-3-5-sonnet-20241022" nor "claude-3-sonnet-20240229". 
+The newest Anthropic model is "claude-sonnet-4-20250514", not "claude-3-7-sonnet-20250219", "claude-sonnet-4-5-20250929" nor "claude-3-sonnet-20240229". 
 </important_code_snippet_instructions>
 */
 

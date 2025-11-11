@@ -162,7 +162,7 @@ Then provide detailed analysis organized into sections:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-sonnet-4-5-20250929',
         max_tokens: 4000,
         stream: true,
         messages: [{ role: 'user', content: prompt }]
@@ -341,7 +341,7 @@ Provide detailed analysis of literary merit, character development, plot structu
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-sonnet-4-5-20250929',
         max_tokens: 4000,
         stream: true,
         messages: [{ role: 'user', content: prompt }]
