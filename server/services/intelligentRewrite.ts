@@ -47,68 +47,57 @@ export async function performIntelligentRewrite(request: IntelligentRewriteReque
   console.log(`Original score: ${originalScore}/100`);
   
   // Step 2: Create rewrite instructions  
-  const defaultInstructions = `INSTRUCTIONS: PRESERVE ORIGINAL TEXT VERBATIM. ADD EMPIRICAL EVIDENCE, CONCRETE EXAMPLES, AND EXPLICIT DEVELOPMENT.
+  const defaultInstructions = `NEVER EVER IMPROVE BY "REWORDING." ALL ADDITIONS MUST BE SUBSTANTIVE, NOT PHRASEOLOGICAL.
 
-NEVER EVER IMPROVE BY "REWORDING." ALL ADDITIONS MUST BE SUBSTANTIVE, NOT PHRASEOLOGICAL.
+YOUR TASK: Take the input text and expand it by adding empirical evidence, concrete examples, and explicit development of implicit points. Keep the core structure and key phrases intact while making MINOR edits for flow.
 
-YOUR TASK:
-1. Keep every original sentence EXACTLY as written (word-for-word)
-2. INSERT new content BETWEEN original sentences that adds:
-   - Empirical studies with quantitative data
-   - Concrete biological/organizational examples
-   - Explicit development of implicit points
-   - Mechanisms and explanations
+WHAT YOU MAY CHANGE (MINIMALLY):
+- Punctuation for readability (semicolon → period, comma → em-dash)
+- "But" → "However" for paragraph transitions
+- Breaking long sentences into 2-3 for clarity
+- These changes are ONLY for structure, never for style
 
 WHAT TO ADD:
 
-FOR EVERY UNSUPPORTED CLAIM:
-- Add specific research: "Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority."
-- Add concrete examples: "Consider apoptosis—programmed cell death. From an individual-cell perspective, apoptosis appears maladaptive: the cell actively dismantles itself through a genetically-encoded suicide program."
-- Add quantitative data: Replace "high degree" with "75% of participants"
-- Add mechanisms: Explain HOW and WHY, not just THAT
+1. EMPIRICAL STUDIES with quantitative data:
+   - "incredibly high degree of conformism" → Add "Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority."
 
-FOR EVERY ABSTRACT ARGUMENT:
-- Add concrete cases from biology, psychology, history
-- Add specific studies and researchers by name
-- Add mathematical models or empirical demonstrations
+2. CONCRETE EXAMPLES from biology, psychology, organizations:
+   - "cells sacrifice for organism" → Add "Consider apoptosis—programmed cell death. From an individual-cell perspective, apoptosis appears maladaptive: the cell actively dismantles itself through a genetically-encoded suicide program."
 
-FOR EVERY IMPLICIT POINT:
-- Make it explicit by spelling out what's being assumed
-- Add 1-3 paragraphs developing the implication
-- Example: "geniuses as limiting cases" → Spell out three interpretations: (1) geniuses as collectives of one, (2) geniuses as rogue actors, (3) geniuses as specialized collective members
+3. EXPLICIT DEVELOPMENT of implicit points:
+   - "geniuses as limiting cases" → Spell out THREE interpretations in separate paragraphs: (1) geniuses as collectives of one, (2) geniuses as rogue actors, (3) geniuses as specialized collective members
 
-MANDATORY FORMAT:
+4. MECHANISMS explaining HOW and WHY:
+   - Don't just say something happens, explain the biological/psychological/organizational mechanism
 
-Original sentence [PRESERVED VERBATIM]. New empirical content adding study/data/example. More development making implicit points explicit. Original next sentence [PRESERVED VERBATIM]. New concrete biological example. Mechanism explanation.
+EXAMPLE OF CORRECT EXPANSION:
 
-EXAMPLE:
+INPUT: "Most people, including most psychologists, operate on the assumption that group psychology is to be understood in terms of individual psychology; that individuals have various self-directed drives and that, in group-contexts, these drives are somehow diverted away from their normal paths and pressed into aims that, not being self-directed, are alien to their own."
 
-ORIGINAL: "This methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people"
-
-IMPROVED: "However, this methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people—even after intellectual shortcomings on their part are taken into account—to other people's opinions. Solomon Asch's classic conformity experiments revealed that approximately 75% of participants conformed to obviously incorrect group judgments at least once, with about 32% of all responses conforming to the erroneous majority. Crucially, these effects persisted even when the perceptual task was unambiguous and participants were demonstrably capable of accurate independent judgment."
+OUTPUT: "Most people, including most psychologists, operate on the assumption that group psychology is to be understood in terms of individual psychology. This methodological individualism posits that individuals possess various self-directed drives and that, in group contexts, these drives are somehow diverted away from their normal paths and pressed into aims that, not being self-directed, are alien to their fundamental nature. The implicit model here is one of reduction: collective behavior is treated as an epiphenomenon—a mere aggregate or distortion of underlying individual psychological processes."
 
 WHAT WAS DONE:
-✓ Original text preserved: "This methodological stance cannot be reconciled with the incredibly high degree of conformism exhibited by people"
-✓ Added Asch experiments (specific study)
-✓ Added 75% and 32% (quantitative data)
-✓ Added "effects persisted even when..." (empirical detail)
-✗ Did NOT change "cannot be reconciled" to "is incompatible with"
-✗ Did NOT change "people" to "individuals"
-✗ Did NOT make it sound more academic
+✓ Kept "Most people, including most psychologists, operate on the assumption"
+✓ Split semicolon into period for readability
+✓ Added "This methodological individualism posits" to name the framework
+✓ Added "The implicit model here is one of reduction" to make assumption explicit
+✓ Kept core phrases: "self-directed drives", "diverted away from their normal paths"
+✗ Did NOT change to academic jargon unnecessarily
+✗ Did NOT rephrase clear statements just to sound smarter
 
 FORBIDDEN:
-❌ Changing "Most people" → "The prevailing assumption" (rephrasing)
-❌ Changing "operate on the assumption" → "posit that" (rephrasing)  
-❌ Changing "it is hard to believe" → "it is impossible" (unless you prove it)
-❌ Adding "wherein", "whereby", "thereof" without adding meaning
-❌ Changing casual voice to academic voice
+❌ Changing clear phrases to fancier synonyms without adding meaning
+❌ Inflating word count with "wherein", "whereby", "thereof"  
+❌ Making it sound more academic when the original is casual
+❌ Rephrasing existing arguments instead of adding NEW arguments
 
 RESULT MUST BE:
-- Original text appears word-for-word
-- 2-3x longer from substantive additions
-- Every claim backed by specific study or concrete case
-- Implicit points explicitly developed
-- Same voice, same rhythm, more empirical grounding`;
+- Core sentences and key phrases preserved
+- 2-3x longer from empirical evidence and concrete examples
+- Every claim backed by specific study, quantitative data, or biological example
+- Implicit points made fully explicit with detailed development
+- Same voice and rhythm, more substance`;
 
   const finalInstructions = customInstructions 
     ? `${defaultInstructions}\n\nADDITIONAL CUSTOM INSTRUCTIONS:\n${customInstructions}\n\nNote: Balance custom instructions with the intelligence optimization criteria above.`
