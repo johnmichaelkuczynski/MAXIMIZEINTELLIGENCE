@@ -8,13 +8,16 @@ This platform analyzes written text to assess the intelligence and cognitive fin
   - ✅ **Created increaseIntelligence.ts service** - Backend implementation with 4-6x expansion logic
   - ✅ **Created IncreaseIntelligenceButton component** - UI button with results modal showing expansion statistics
   - ✅ **Added API endpoint** - /api/increase-intelligence route handles text expansion requests
-  - ✅ **Integrated in DocumentResults.tsx** - Button appears after analysis results for immediate use
+  - ✅ **Integrated in DocumentResults.tsx and HomePage.tsx** - Button appears as 4th analysis option alongside Intelligence Analysis, Case Assessment, Fiction Analysis
+  - ✅ **RECURSIVE REWRITE CAPABILITY** - Users can infinitely rewrite expanded text with custom instructions
   - **Function specifications**: 
     - EXPANDS text 4-6x (250 words → 1,500-3,000 words)
     - ADDS empirical grounding (studies, data, experiments with specific percentages)
     - MAKES IMPLICIT EXPLICIT (numbered premises, detailed logical steps)
     - ADDS CITATIONS (real research from cognitive science, neuroscience, psychology)
     - PRESERVES all original arguments (never simplifies or condenses)
+    - ZERO MARKDOWN in output (no ###, **, *, bullets - pure plain text only)
+    - RECURSIVE rewriting with custom instructions (e.g., "add more statistical data", "cite Carl Hempel")
   - Files created: server/services/increaseIntelligence.ts, client/src/components/IncreaseIntelligenceButton.tsx
 - **November 2025**: **INTELLIGENT REWRITE FUNCTION REMOVED** - Complete removal of old intelligence maximization feature
   - ❌ **Deleted intelligentRewrite.ts service** - Backend implementation completely removed
