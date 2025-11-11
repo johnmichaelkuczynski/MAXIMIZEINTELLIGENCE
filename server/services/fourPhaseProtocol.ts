@@ -35,53 +35,84 @@ IF I WERE TO GIVE A LOW SCORE TO THIS PASSAGE, WOULD I BE PENALIZING ACTUAL INTE
 function createPhase1ComprehensivePrompt(text: string, questions: string): string {
   return `COMPREHENSIVE INTELLIGENCE ANALYSIS - DETAILED EVIDENCE-BASED EVALUATION
 
-CRITICAL INSTRUCTIONS:
-- This is a COMPREHENSIVE analysis requiring EXTENSIVE detail and evidence
-- EVERY single statement you make MUST be supported by DIRECT QUOTES from the text
-- Your analysis must be AT LEAST 3000 words
-- For EACH of the ${questions.split('\n').filter(q => q.trim().length > 0).length} questions below, you MUST:
-  1. Quote MULTIPLE relevant passages (minimum 2-3 quotes per question)
-  2. Provide DETAILED arguments (minimum 100 words per question)
-  3. Show EXACTLY how the evidence supports your judgment
+═══════════════════════════════════════════════════════════════
+PERCENTILE SCORING SYSTEM (MANDATORY INTERPRETATION):
+═══════════════════════════════════════════════════════════════
+A score of N/100 means the author is SMARTER THAN N% of all human writers.
+This is a PERCENTILE RANKING of global cognitive rarity, NOT a grade.
 
-SCORING PRINCIPLES:
-- Score N/100 means author is smarter than N% of general population
-- 83/100 = only 17/100 people in Walmart are smarter
-- Judge RAW INTELLIGENCE, not academic polish
-- Brilliant but unconventional = HIGH score
-- Polished but dumb = LOW score
+100/100 = Top 0.001% of human cognition (virtually unmatched genius)
+95/100  = Top 0.1% of humanity (1 in 1,000 people)
+85/100  = Top 15% of humanity (smarter than 85% of all humans)
+75/100  = Top 25% of humanity
+50/100  = Median human intelligence (average person)
+25/100  = Bottom 25% of humanity
 
-COMPREHENSIVE ANALYSIS FORMAT:
+Example: 83/100 means only 17 out of 100 people in Walmart are smarter than this author.
 
-For EACH question below, you must write:
+DO NOT MODERATE OR ADJUST SCORES. Give the RAW intelligence assessment.
+DO NOT lower high scores. DO NOT raise low scores. BE BRUTALLY HONEST.
 
+Judge RAW COGNITIVE ABILITY, not academic polish or conformity.
+Brilliant but unconventional = HIGH percentile score
+Polished but unintelligent = LOW percentile score
+
+═══════════════════════════════════════════════════════════════
+ABSOLUTE MANDATORY EVIDENCE REQUIREMENT:
+═══════════════════════════════════════════════════════════════
+This is a COMPREHENSIVE analysis requiring EXTENSIVE detail and evidence.
+MINIMUM LENGTH: 3000 words total
+
+For EACH of the ${questions.split('\n').filter(q => q.trim().length > 0).length} questions below, you MUST:
+  1. Quote MULTIPLE relevant passages (MINIMUM 3-4 quotes per question)
+  2. Provide DETAILED paragraph analysis (MINIMUM 150 words per question)
+  3. Reference EXACT words, phrases, and sentences from the text
+  4. Show EXACTLY how the evidence supports your judgment
+
+DO NOT WRITE GENERIC STATEMENTS LIKE:
+❌ "The text is insightful..."
+❌ "The points are developed well..."
+❌ "The organization is hierarchical..."
+
+INSTEAD, WRITE EVIDENCE-BASED ANALYSIS:
+✓ The author states: "[exact quote]" which demonstrates insight because... [detailed analysis of this specific quote]
+
+COMPREHENSIVE ANALYSIS FORMAT FOR EACH QUESTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 QUESTION: [restate the question]
 
 EVIDENCE FROM TEXT:
-Quote 1: "[exact quote from text]"
-Quote 2: "[exact quote from text]"  
-Quote 3: "[exact quote from text]"
+"[Direct quote 1 from the text]"
+"[Direct quote 2 from the text]"
+"[Direct quote 3 from the text]"
+"[Direct quote 4 from the text]"
 
-DETAILED ANALYSIS:
-[Write 100-200 words analyzing how these quotes answer the question. Be specific about what the quotes reveal about intelligence. Reference the exact words and phrases. Explain the logical connections. Discuss what this says about the author's cognitive abilities.]
+DETAILED ANALYSIS (150+ words):
+[Analyze these SPECIFIC quotes in detail. Reference the exact words and phrases. Explain what these particular statements reveal about the author's intelligence. Discuss the logical connections. Explain the cognitive sophistication (or lack thereof) demonstrated. Connect to the question being asked. NO GENERIC STATEMENTS ALLOWED.]
 
-JUDGMENT: [Your assessment for this specific question]
+JUDGMENT: [Your specific assessment for this question based on the evidence]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
----
+YOU MUST USE THIS FORMAT FOR EVERY QUESTION. NO EXCEPTIONS.
+EVERY ANSWER MUST CONTAIN ACTUAL QUOTES FROM THE TEXT.
+NO GENERIC ASSESSMENTS WILL BE ACCEPTED.
+
+If you write even ONE answer without specific quotes from the text, you have FAILED.
 
 ${questions}
 
-REQUIREMENTS:
-- Answer ALL questions with the format above
-- Minimum 3 quotes per question
-- Minimum 100 words analysis per question
-- Total response must exceed 3000 words
-- Be brutally honest about intelligence level
-- Support EVERY claim with textual evidence
+REQUIREMENTS CHECKLIST:
+□ Answer ALL questions with the format above
+□ MINIMUM 3-4 quotes per question with "quotation marks"
+□ MINIMUM 150 words analysis per question
+□ Total response MUST exceed 3000 words
+□ Be brutally honest about intelligence level
+□ Support EVERY claim with direct textual evidence
+□ DO NOT moderate scores - give RAW percentile assessment
 
 After analyzing all questions, provide:
 
-OVERALL INTELLIGENCE ASSESSMENT: [500+ word summary integrating all evidence]
+OVERALL INTELLIGENCE ASSESSMENT: [500+ word summary integrating all evidence with quotes]
 
 FINAL SCORE: [number]/100
 
@@ -111,21 +142,38 @@ function createPhase2ComprehensivePrompt(score: number, text: string, questions:
   const peopleOutperforming = 100 - score;
   return `PHASE 2: COMPREHENSIVE PUSHBACK AND RE-EVALUATION
 
-Your initial position was that ${peopleOutperforming}/100 people outperform this author in intelligence.
-That means ${peopleOutperforming} out of 100 people in Walmart are running rings around this person.
+═══════════════════════════════════════════════════════════════
+PERCENTILE REALITY CHECK:
+═══════════════════════════════════════════════════════════════
+Your initial position: ${peopleOutperforming}/100 people outperform this author in intelligence.
+Translation: ${peopleOutperforming} out of 100 people in Walmart are running cognitive rings around this person.
+Your score of ${score}/100 means this author is smarter than ${score}% of ALL HUMANS.
 
-Are you SURE about that assessment? Re-analyze the text with even MORE rigorous evidence.
+Are you ABSOLUTELY SURE about that assessment?
+Did you miss evidence of higher intelligence?
+Did you penalize unconventional brilliance?
+Did you reward mediocre conformity?
+
+Re-analyze with FRESH EYES and NEW EVIDENCE you may have overlooked.
 
 ${questions}
 
 COMPREHENSIVE RE-ANALYSIS REQUIREMENTS:
-- For EACH question, provide 2-3 NEW quotes you may have overlooked
-- Write 150+ words per question analyzing the evidence
-- Be MORE critical and look for intelligence signals you may have missed
-- Challenge your initial assessment with fresh evidence
-- Total response must exceed 2500 words
+═══════════════════════════════════════════════════════════════
+MINIMUM LENGTH: 2500 words total
 
-Use the same detailed format as Phase 1.
+For EACH question:
+□ Provide 3-4 NEW quotes you may have overlooked in Phase 1
+□ Write 150+ words per question analyzing the fresh evidence
+□ Look for intelligence signals you may have missed
+□ Challenge your initial assessment with new textual evidence
+□ Reference EXACT words and phrases from the text
+
+DO NOT write generic reassessments.
+QUOTE the actual text extensively.
+DO NOT moderate your new score - give the RAW percentile.
+
+Use the same detailed format as Phase 1 with quotes and analysis.
 
 FINAL SCORE: [NUMBER]/100
 

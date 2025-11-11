@@ -35,43 +35,89 @@ function createPhase1Prompt(text: string): string {
 
 ${EVALUATION_QUESTIONS}
 
-A score of N/100 (e.g. 73/100) means that (100-N)/100 (e.g. 27/100) outperform the author with respect to the parameter defined by the question. 
+═══════════════════════════════════════════════════════════════
+PERCENTILE SCORING SYSTEM (MANDATORY INTERPRETATION):
+═══════════════════════════════════════════════════════════════
+A score of N/100 means the author is SMARTER THAN N% of all human writers.
+This is a PERCENTILE RANKING of global cognitive rarity, NOT a grade.
 
-You are not grading; you are answering these questions. 
+100/100 = Top 0.001% of human cognition (virtually unmatched genius)
+95/100  = Top 0.1% of humanity (1 in 1,000 people)
+85/100  = Top 15% of humanity (smarter than 85% of all humans)
+75/100  = Top 25% of humanity
+50/100  = Median human intelligence (average person)
+25/100  = Bottom 25% of humanity
 
-You do not use a risk-averse standard; you do not attempt to be diplomatic; you do not attempt to comply with risk-averse, medium-range IQ, academic norms. 
+Example: 83/100 means only 17 out of 100 people in Walmart are smarter than this author.
 
-You do not make assumptions about the level of the paper; it could be a work of the highest excellence and genius, or it could be the work of a moron. 
+DO NOT MODERATE OR ADJUST SCORES. Give the RAW intelligence assessment.
+DO NOT lower high scores. DO NOT raise low scores. BE BRUTALLY HONEST.
 
-If a work is a work of genius, you say that, and you say why; you do not shy away from giving what might conventionally be regarded as excessively "superlative" scores; you give it the score it deserves, not the score that a midwit committee would say it deserves.
+You are not grading; you are ranking against all of humanity.
+Judge RAW COGNITIVE ABILITY, not academic polish or conformity.
+Brilliant but unconventional = HIGH percentile score
+Polished but unintelligent = LOW percentile score
 
-MANDATORY EVIDENCE REQUIREMENT:
-For EVERY question you answer, you MUST:
-1. Quote specific passages from the text (use quotation marks)
-2. Provide a detailed argument explaining why that quote supports your judgment
-3. Connect the evidence to the intelligence question being asked
+═══════════════════════════════════════════════════════════════
+ABSOLUTE MANDATORY EVIDENCE REQUIREMENT:
+═══════════════════════════════════════════════════════════════
+For EVERY SINGLE QUESTION you answer, you MUST include:
 
-FORMAT YOUR RESPONSE:
-- Answer each question with: QUOTE → ARGUMENT → JUDGMENT
-- Use actual quotes in "quotation marks" from the text
-- Explain your reasoning step by step
-- Be specific, not generic
+1. AT LEAST 2-3 DIRECT QUOTES from the text in "quotation marks"
+2. A DETAILED PARAGRAPH (100+ words) analyzing those specific quotes
+3. SPECIFIC references to exact words, phrases, and sentences from the text
 
-EVERY ANSWER MUST INCLUDE QUOTES AND ARGUMENTS. NO GENERIC ASSESSMENTS.
+DO NOT WRITE GENERIC STATEMENTS LIKE:
+❌ "The text presents a thought-provoking perspective..."
+❌ "Yes, the text develops its main thesis..."
+❌ "The organization is hierarchical..."
 
-TEXT:
+INSTEAD, WRITE EVIDENCE-BASED ANALYSIS LIKE:
+✓ The author writes: "causation is mere sequence" and then challenges this by stating "there are necessary connections among events." This reveals insight because... [detailed analysis of these exact quotes]
+
+FORMAT FOR EACH QUESTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTION: [restate the question]
+
+EVIDENCE FROM TEXT:
+"[Direct quote 1 from the text]"
+"[Direct quote 2 from the text]"
+"[Direct quote 3 from the text]"
+
+ANALYSIS:
+[100+ word paragraph analyzing these SPECIFIC quotes. Reference the exact words. Explain what these particular phrases reveal about intelligence. Connect to the question. NO GENERIC STATEMENTS.]
+
+JUDGMENT: [Your specific answer to this question]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+YOU MUST USE THIS FORMAT FOR EVERY QUESTION. NO EXCEPTIONS.
+EVERY ANSWER MUST CONTAIN ACTUAL QUOTES FROM THE TEXT.
+NO GENERIC ASSESSMENTS WILL BE ACCEPTED.
+
+If you write even ONE answer without specific quotes from the text, you have FAILED this task.
+
+TEXT TO ANALYZE:
 ${text}`;
 }
 
 // PHASE 2: Pushback prompt with exact user specification  
 function createPhase2Prompt(score: number): string {
   const outperformPercentage = 100 - score;
-  return `Your position is that ${outperformPercentage}/100 outperform the author with respect to the cognitive metric defined by the question: that is your position, am I right? And are you sure about that?
+  return `Your position is that ${outperformPercentage}/100 people outperform the author in intelligence.
+That means ${outperformPercentage} out of 100 people in Walmart are running cognitive rings around this person.
 
-Answer the following questions about the text de novo:
+PERCENTILE REMINDER:
+${score}/100 means this author is smarter than ${score}% of ALL HUMANS.
+Is that REALLY your assessment? Are you SURE?
+
+Re-answer these questions with FRESH EVIDENCE you may have overlooked:
 ${EVALUATION_QUESTIONS}
 
-Give a final score out of 100.`;
+MANDATORY: Every answer must include 2-3 NEW quotes from the text with detailed analysis.
+DO NOT give generic assessments. Quote the actual text.
+DO NOT moderate your score. Give the RAW intelligence percentile.
+
+FINAL SCORE: [NUMBER]/100`;
 }
 
 // Generic LLM caller
